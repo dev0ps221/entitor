@@ -7,7 +7,7 @@
         private $dbconnection=null;
         private $modulespath=null;
         function getconnection(){
-            return $this-dbconnection();
+            return $this->dbconnection;
         }
         function dbstuff(){
             $this->dbconnection = new EntitorDatabase($this->dbcreds);

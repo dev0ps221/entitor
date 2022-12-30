@@ -45,7 +45,6 @@
             $this->entitor = $entitor;
             $this->modulespath = $this->entitor->getmodulespath();
             $this->loadmodules();
-            echo json_encode($this->modules);
         }
     }
 ?>
