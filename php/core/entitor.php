@@ -6,6 +6,9 @@
         private $herepath=null;
         private $dbconnection=null;
         private $modulespath=null;
+        function getmod($name){
+            return $this->mods()->getmod($name);
+        }
         function mods(){
             return $this->modules;
         }

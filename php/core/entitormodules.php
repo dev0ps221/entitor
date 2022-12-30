@@ -39,6 +39,7 @@
             return array_key_exists($name,$this->modules);
         }
         function getmod($name){
+            echo $name;
             return $this->mod_exists($name) ? $this->modules[$name] : null;
         }
         function getmods(){
