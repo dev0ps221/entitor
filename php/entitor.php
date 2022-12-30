@@ -81,14 +81,21 @@
             $this->dbstuff();
         }
     }
-    class Entitor{
+    class EntitorModules{
         private $modules = [];
+
+        function loadmodule($name,$ModuleClass){
+            $this->modules[$name] = new $ModuleClass($this->$entitor->dbconnection);
+        }
+        function __construct($entitor){
+            $this->entitor = $entitor;
+        }
+    }
+    class Entitor{
+        private $modules = null;
         private $herepath=null;
         private $dbconnection=null;
         private $modulespath=null;
-        function loadmodule($name,$ModuleClass){
-            $this->modules[$name] = new $ModuleClass($this->dbconnection);
-        }
         function dbstuff(){
             $this->dbconnection = new EntitorDatabase($this->dbcreds);
         }
@@ -97,6 +104,7 @@
             $this->herepath = dirname(__FILE__);
             $this->modulespath = "$this->herepath/mods";
             $this->dbstuff();
+            $this->modules = new EntitorModules($this);
         }
         
 
