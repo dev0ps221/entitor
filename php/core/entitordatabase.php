@@ -37,6 +37,10 @@
 
         private $settings ;
 
+        function request($action,...$args){
+            return $this->dbconnection[$action](...$args)
+        }
+
         function createTableReq($name,$fields){
             $req = " CREATE TABLE $name (";
             foreach ($fields as $key => $field) {

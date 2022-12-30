@@ -33,13 +33,12 @@
             }
         }
         function loadmodule($name,$ModuleClass){
-            $this->modules[$name] = new $ModuleClass($this->entitor->getconnection());
+            $this->modules[$name] = new $ModuleClass($name,$this->entitor->getconnection());
         }
         function mod_exists($name){
             return array_key_exists($name,$this->modules);
         }
         function getmod($name){
-            echo $name;
             return $this->mod_exists($name) ? $this->modules[$name] : null;
         }
         function getmods(){
