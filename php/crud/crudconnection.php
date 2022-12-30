@@ -248,6 +248,7 @@ class CrudConnection{
     }
 
     function query($query,$dofetch=true){
+        echo $query;
         $action =   $this->connection->query($query);
         if($action){
             if($dofetch==false){

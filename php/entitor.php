@@ -1,10 +1,39 @@
 <?php
-    class EntitorDatabase{
-        private $tablestructure = [
-            ['entites',[['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key']]],
-            ['champs_entites',[['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key']]]
-        ];
+    class EntitorDatabaseSettings{
 
+        private $tablestructure = [
+            [
+                'entites'
+                ,[
+                    ['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key']
+                ]
+            ],
+            [
+                'champs_entites'
+                ,[
+                    ['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key'],
+                    ['name'=>'titre','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
+                    ['name'=>'entite','type'=>'int','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
+                    ['name'=>'type','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null]
+                ]
+            ],
+            [
+                'entree_champs_entites'
+                ,[
+                    ['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key'],
+                    ['name'=>'valeur','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
+                    ['name'=>'champs','type'=>'int','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
+                    ['name'=>'type','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null]
+                ]
+            ]
+        ];
+        function gettablestructure(){
+            return $this->tablestructure;
+        }
+    }
+    class EntitorDatabase{
+
+        private $settings ;
 
         function createTableReq($name,$fields){
             $req = " CREATE TABLE $name (";
@@ -22,11 +51,11 @@
         }
 
         function createTable($name,$fields){
-            return $this->dbconnection->getconn()->query($this->createTableReq($name,$fields));
+            return $this->dbconnection->query($this->createTableReq($name,$fields),null);
         }
 
         function checkTables(){
-            foreach($this->tablestructure as $table){
+            foreach($this->settings->gettablestructure() as $table){
                 $name = $table[0];
                 $fields = $table[1];
                 if(!$this->dbconnection->gettabledata($name)){
@@ -48,6 +77,7 @@
         function __construct($databasecreds){
             $this->dbcreds = $databasecreds;
             $this->herepath = dirname(__FILE__);
+            $this->settings = new EntitorDatabaseSettings();
             $this->dbstuff();
         }
     }
@@ -64,7 +94,7 @@
             $this->herepath = dirname(__FILE__);
             $this->modulespath = "$this->herepath/mods";
             $this->dbstuff();
-            echo json_encode($this->dbconnection);
+            // echo json_encode($this->dbconnection);
         }
         
 
