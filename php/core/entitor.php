@@ -6,6 +6,9 @@
         private $herepath=null;
         private $dbconnection=null;
         private $modulespath=null;
+        function mods(){
+            return $this->modules;
+        }
         function getconnection(){
             return $this->dbconnection;
         }

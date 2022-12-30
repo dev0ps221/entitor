@@ -1,5 +1,4 @@
 <?php
-    include('entitor.php');
+    include('core/entitor.php');
     $entitor = new Entitor([]);
-    
 ?>

@@ -41,6 +41,9 @@
         function getmod($name){
             return $this->mod_exists($name) ? $this->modules[$name] : null;
         }
+        function getmods(){
+            return $this->modules;
+        }
         function __construct($entitor){
             $this->entitor = $entitor;
             $this->modulespath = $this->entitor->getmodulespath();
