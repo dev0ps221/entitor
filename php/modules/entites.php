@@ -5,5 +5,4 @@
             parent::__construct($conn);
         }
     }
-
 ?>
