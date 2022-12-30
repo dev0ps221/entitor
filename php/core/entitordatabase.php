@@ -38,7 +38,7 @@
         private $settings ;
 
         function request($action,...$args){
-            return $this->dbconnection[$action](...$args)
+            return property_exists($this->dbconnection,$action) ? $this->dbconnection->{$action}(...$args) : null;
         }
 
         function createTableReq($name,$fields){
