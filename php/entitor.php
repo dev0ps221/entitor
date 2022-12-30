@@ -86,6 +86,9 @@
         private $herepath=null;
         private $dbconnection=null;
         private $modulespath=null;
+        function loadmodule($name,$ModuleClass){
+            $this->modules[$name] = new $ModuleClass($this->dbconnection);
+        }
         function dbstuff(){
             $this->dbconnection = new EntitorDatabase($this->dbcreds);
         }
@@ -94,7 +97,6 @@
             $this->herepath = dirname(__FILE__);
             $this->modulespath = "$this->herepath/mods";
             $this->dbstuff();
-            // echo json_encode($this->dbconnection);
         }
         
 

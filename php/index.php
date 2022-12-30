@@ -1,5 +1,6 @@
 <?php
     include('entitor.php');
-    $Entitor = new Entitor([]);
+    $entitor = new Entitor([]);
+    echo json_encode($entitor)
 
 ?>
