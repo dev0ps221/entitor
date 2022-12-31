@@ -28,7 +28,7 @@
         }
         function updatefield($id,$field,$value){
             $action = "update_lignes_$field";
-            return $this->db->request($action,"'$value'");    
+            return $this->db->request($action,"$value");    
         }
         function getfeed($entite){
             $feed = [];
