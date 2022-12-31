@@ -11,11 +11,18 @@
                 ]
             ],
             [
+                'lignes'
+                ,[
+                    ['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key'],
+                    ['name'=>'entite','type'=>'int','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
+                ]
+            ],
+            [
                 'champs_entites'
                 ,[
                     ['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key'],
                     ['name'=>'titre','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
-                    ['name'=>'entite','type'=>'int','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
+                    ['name'=>'ligne','type'=>'int','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
                     ['name'=>'type','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null]
                 ]
             ],
