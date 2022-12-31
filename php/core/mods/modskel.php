@@ -2,7 +2,8 @@
     class EntitorModule{
 
         
-        function __construct($name,$connection){
+        function __construct($entitor,$name,$connection){
+            $this->entitor = $entitor;
             $this->name = $name;
             $this->db = $connection;
         }
