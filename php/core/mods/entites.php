@@ -15,7 +15,7 @@
             return $this->db->request('delete_entites_entries');
         }
         function deletebytitre($titre){
-            return $this->db->request('delete_entites_entry_by_titre',"'$titre'");
+            return $this->db->request('delete_entites_entry_by_titre',"$titre");
         }
         function select($id){
             return $this->db->request('select_entites_entry',$id);
@@ -24,11 +24,11 @@
             return $this->db->request('select_entites_entries');
         }
         function selectbytitre($titre){
-            return $this->db->request('select_entites_entry_by_titre',"'$titre'");
+            return $this->db->request('select_entites_entry_by_titre',"$titre");
         }
         function updatefield($id,$field,$value){
             $action = "update_entites_$field";
-            return $this->db->request($action,"'$value'");    
+            return $this->db->request($action,"$value");    
         }
         function setfeed(){
             $feed = [];
