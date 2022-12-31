@@ -14,28 +14,35 @@
         function deleteAll(){
             return $this->db->request('delete_lignes_entries');
         }
-        function deletebyentite($entite){
-            return $this->db->request('delete_lignes_entry_by_entite',"$entite");
+        function deletebytitre($entite,$titre){
+            return array_filter($this->db->request('delete_lignes_entry_by_entite',$entite),function ($elem){ return $elem['titre'] == $titre;});
         }
         function select($id){
             return $this->db->request('select_lignes_entry',$id);
         }
-        function selectAll(){
-            return $this->db->request('select_lignes_entries');
+        function selectAll($entite){
+            return $this->db->request('select_lignes_entry_by_entite',$entite);
         }
-        function selectbyentite($entite){
-            return $this->db->request('select_lignes_entry_by_entite',"$entite");
+        function selectbytitre($entite,$titre){
+            return array_filter($this->db->request('select_lignes_entry_by_entite',$entite),function ($elem){ return $elem['titre'] == $titre;});
         }
         function updatefield($id,$field,$value){
             $action = "update_lignes_$field";
-            return $this->db->request($action,"$value");    
+            return $this->db->request($action,"'$value'");    
         }
-        function setfeed(){
+        function getfeed($entite){
             $feed = [];
-            $entiteclass = $this->entitor->getobj('entite');
-            foreach($this->selectAll() as $entite){
-                array_push($feed,new $entiteclass($this,$entite));
+            $champsentiteclass = $this->entitor->getobj('ligne');
+            foreach($this->selectAll($entite) as $champsentite){
+                array_push($feed,new $champsentiteclass($this,$champsentite));
             }
+            return $feed;
+        }
+        function deletebyentite($entite){
+            return $this->db->request('delete_lignes_entry_by_entite',"$entite");
+        }
+        function selectbyentite($entite){
+            return $this->db->request('select_lignes_entry_by_entite',"$entite");
         }
         function __construct($entitor,$name,$conn){
             parent::__construct($entitor,$name,$conn);
