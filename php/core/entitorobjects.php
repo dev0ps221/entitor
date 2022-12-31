@@ -1,6 +1,6 @@
 <?php
     class EntitorObjects{
-        private $excludenames = ['.','..'];
+        private $excludenames = ['objskel','.','..'];
         private $objects = [];
         private $objectspath=null;
         function objectClassName($filename){

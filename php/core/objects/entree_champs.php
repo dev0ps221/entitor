@@ -1,7 +1,9 @@
 <?php
-    class EntitorEntreeChamps{
-        function __construct(){
-            
+    include_once(dirname(__FILE__)."/objskel.php");
+    class EntitorEntreeChamps extends EntitorObject{
+        function __construct($manager,$data){
+            parent::__construct($manager,$data);
+            print_r($data);
         }
     }
 ?>

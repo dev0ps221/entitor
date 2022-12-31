@@ -3,7 +3,7 @@
     class EntitorEntite extends EntitorObject{
         function __construct($manager,$data){
             parent::__construct($manager,$data);
-            print_r($data);
+            // print_r($this->data);
         }
     }
 ?>
