@@ -27,11 +27,20 @@
                 ]
             ],
             [
-                'entree_champs_entites'
+                'entrees_champs_entites'
                 ,[
                     ['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key'],
                     ['name'=>'valeur','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
                     ['name'=>'champs','type'=>'int','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
+                    ['name'=>'type','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null]
+                ]
+            ],
+            [
+                'entrees_lignes'
+                ,[
+                    ['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key'],
+                    ['name'=>'valeur','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
+                    ['name'=>'ligne','type'=>'int','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
                     ['name'=>'type','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null]
                 ]
             ]
