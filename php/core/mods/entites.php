@@ -12,7 +12,7 @@
             return $this->db->request('delete_entites_entry',$id);
         }
         function deleteAll(){
-            return $this->db->request('delete_entites_entries',$id);
+            return $this->db->request('delete_entites_entries');
         }
         function deletebytitre($titre){
             return $this->db->request('delete_entites_entry_by_titre',"'$titre'");
