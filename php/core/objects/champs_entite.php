@@ -7,8 +7,6 @@
         function __construct($manager,$data){
             parent::__construct($manager,$data);
             $this->entrees = $manager->entitor->getmod('entrees_champs');
-            $this->addentree('test'.$this->get('titre'),'texte');
-            print_r($this->entrees->getfeed($this->get('id')));
         }
     }
 ?>
