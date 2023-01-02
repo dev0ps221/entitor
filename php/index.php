@@ -71,6 +71,14 @@
             }
         )
     }
+    function createtableau(titre){
+        _ajaxpost_(
+            'createtableau',{titre},(e,req)=>{
+                actualtable = req.response
+                refreshTable()
+            }
+        )
+    }
     function refreshTable(){
         renderTable(actualtable,document.querySelector('#view'),1)
     }
