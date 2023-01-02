@@ -10,17 +10,17 @@
         function deleteAll(){
             return $this->db->request('delete_entrees_champs_entites_entries');
         }
-        function deletebyvaleur($champs,$valeur){
-            return array_filter($this->db->request('delete_entrees_champs_entites_entry_by_entite',$champs),function ($elem){ return $elem['valeur'] == $valeur;});
+        function deletebyvaleur($champs,$valeurchamps){
+            return array_filter($this->db->request('delete_entrees_champs_entites_entry_by_ligne',$champs),function ($elem){ return $elem['valeur'] == $valeur;});
         }
         function select($id){
             return $this->db->request('select_entrees_champs_entites_entry',$id);
         }
-        function selectAll($champs){
-            return $this->db->request('select_entrees_champs_entites_entry_by_entite',$champs);
+        function selectAll($ligne){
+            return $this->db->request('select_entrees_champs_entites_entry_by_ligne',$ligne);
         }
         function selectbyvaleur($champs,$valeur){
-            return array_filter($this->db->request('select_entrees_champs_entites_entry_by_entite',$champs),function ($elem){ return $elem['valeur'] == $valeur;});
+            return array_filter($this->db->request('select_entrees_champs_entites_entry_by_ligne',$champs),function ($elem){ return $elem['valeur'] == $valeur;});
         }
         function updatefield($id,$field,$value){
             $action = "update_entrees_champs_entites_$field";

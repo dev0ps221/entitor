@@ -10,13 +10,13 @@
                     ['name'=>'titre','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
                 ]
             ],
-            // [
-            //     'lignes'
-            //     ,[
-            //         ['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key'],
-            //         ['name'=>'entite','type'=>'int','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
-            //     ]
-            // ],
+            [
+                'lignes'
+                ,[
+                    ['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key'],
+                    ['name'=>'entite','type'=>'int','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
+                ]
+            ],
             [
                 'champs_entites'
                 ,[
