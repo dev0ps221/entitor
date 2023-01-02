@@ -2,9 +2,6 @@
     include_once(dirname(__FILE__)."/modskel.php");
      
     class EntitorEntites extends EntitorModule{
-        private $dataset = [
-            'entites'=>[]
-        ];
         function createNew($titre){
             return $this->db->request('insert_into_entites',['titre'=>$titre]);
         }
@@ -36,6 +33,11 @@
             foreach($this->selectAll() as $entite){
                 array_push($feed,new $entiteclass($this,$entite));
             }
+            $this->feed = $feed;
+            return $feed;
+        }
+        function getfeed(){
+            return $this->setfeed();
         }
         function __construct($entitor,$name,$conn){
             parent::__construct($entitor,$name,$conn);
