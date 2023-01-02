@@ -8,6 +8,12 @@
         function addchamps($titre,$type){
             return $this->champs->createNew($titre,$this->get('id'),$type);
         }
+        function renamechamps($titre){
+            return $this->champs->updatefield($this->get('id'),'titre',$titre);
+        }
+        function updatetypechamps($titre){
+            return $this->champs->updatefield($this->get('id'),'titre',$titre);
+        }
         function getlignes(){
             return $this->lignes->getfeed($this->get('id'));
         }
