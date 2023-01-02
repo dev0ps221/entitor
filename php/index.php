@@ -30,6 +30,7 @@
 
 </section>
 <script>
+    var actualtable = 1
     function _ajaxpost_(action,data,cb){
         const req = new XMLHttpRequest()
         const formdata = new FormData()
@@ -55,10 +56,25 @@
             }
         )
     }
-    function updateentree(colonne,valeur){
-        console.log(colonne,valeur)
+    function updatecolonne(colonne,valeur){
+        const updatedata = {colonne,valeur}
+        _ajaxpost_(
+            'updatecolonne',updatedata,(e,req)=>{
+                refreshTable()
+            }
+        )
     }
-    renderTable(1,document.querySelector('#view'),1)
+    function addligne(){
+        _ajaxpost_(
+            'addligne',{id:actualtable},(e,req)=>{
+                refreshTable()
+            }
+        )
+    }
+    function refreshTable(){
+        renderTable(actualtable,document.querySelector('#view'),1)
+    }
+    refreshTable()
     
 </script>
 </body>
