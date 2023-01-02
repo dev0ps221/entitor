@@ -29,6 +29,10 @@
             $action = "update_entrees_champs_entites_$field";
             return $this->db->request($action,"'$value'","id = $id");    
         }
+        function updateval($id,$value){
+            $action = "update_entrees_champs_entites_valeur";
+            return $this->db->request($action,"'$value'","id = $id");    
+        }
         function getfeed(){
             $feed = [];
             $entreeclass = $this->entitor->getobj('entree_champs');

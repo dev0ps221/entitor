@@ -5,13 +5,17 @@
 
         function addentree(){
             foreach($this->getchamps() as $champs){
-                $titrechamps = $champs->get('titre');
-                $typechamps = $champs->get('titre');
+                $idchamps = $champs->get('id');
+                $typechamps = $champs->get('type');
                 $ligne = $this->get('id');
                 $valeur = "";
-                $this->entrees->createNew($valeur,$titrechamps,$ligne,$type);
+                $this->entrees->createNew($valeur,$idchamps,$ligne,$typechamps);
             }
             return $this->getentree();  
+        }
+        function editentree($champs,$valeur){
+            $entree = $this->champs->select($champs);
+            return $entree->updateval($valeur);
         }
         function delentree($valeur,$type){
             return $this->manager->delete($valeur,$this->get('id'));

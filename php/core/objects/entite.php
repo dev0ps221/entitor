@@ -4,8 +4,8 @@
         private $champs = null;
         function addligne(){
             $ligne = $this->lignes->createNew($this->get('id'));
-            $ligne->addentree();
-            return 
+            return $ligne->addentree();
+            
         }
         function addchamps($titre,$type){
             return $this->champs->createNew($titre,$this->get('id'),$type);

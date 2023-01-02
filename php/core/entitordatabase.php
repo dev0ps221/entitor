@@ -30,7 +30,7 @@
                 'entrees_champs_entites'
                 ,[
                     ['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key'],
-                    ['name'=>'valeur','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
+                    ['name'=>'valeur','type'=>'text','extra'=>null,'null'=>true,'default'=>null,'keys'=>null],
                     ['name'=>'champs','type'=>'int','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
                     ['name'=>'ligne','type'=>'int','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
                     ['name'=>'type','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null]
