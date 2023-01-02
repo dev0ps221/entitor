@@ -11,8 +11,8 @@
         function deleteAll(){
             return $this->db->request('delete_champs_entites_entries');
         }
-        function deletebytitre($entite,$titre){
-            return array_filter($this->db->request('delete_champs_entites_entry_by_entite',$entite),function ($elem){ return $elem['titre'] == $titre;});
+        function deletebytitre($ligne,$titre){
+            return array_filter($this->db->request('delete_champs_entites_entry_by_ligne',$ligne),function ($elem){ return $elem['titre'] == $titre;});
         }
         function select($id){
             return $this->db->request('select_champs_entites_entry',$id);
