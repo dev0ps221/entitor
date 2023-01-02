@@ -45,14 +45,20 @@
         req.open('post','/app.php')
         req.send(formdata)
     }
-    const data = {id:1,canedit:1}
-    _ajaxpost_(
-        'rendertable',
-        data,
-        (e,req)=>{
-            document.querySelector('#view').innerHTML = req.response
-        }
-    )
+    function renderTable(id,target,canedit){
+        const data = {id,canedit}
+        _ajaxpost_(
+            'rendertable',
+            data,
+            (e,req)=>{
+                target.innerHTML = req.response
+            }
+        )
+    }
+    function updateentree(colonne,valeur){
+        console.log(colonne,valeur)
+    }
+    renderTable(1,document.querySelector('#view'),1)
     
 </script>
 </body>
