@@ -8,6 +8,9 @@
         function addchamps($titre,$type){
             return $this->champs->createNew($titre,$this->get('id'),$type);
         }
+        function getlignes(){
+            return $this->lignes->getfeed($this->get('id'));
+        }
         function __construct($manager,$data){
             parent::__construct($manager,$data);
             $this->lignes = $manager->entitor->getmod('lignes');

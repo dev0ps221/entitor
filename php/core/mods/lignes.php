@@ -7,19 +7,25 @@
         function delete($id){
             return $this->db->request('delete_lignes_entry',$id);
         }
+        function deleteAllByEntite($entite){
+            return $this->db->request('delete_lignes_entry_by_entite',$entite);
+        }
         function deleteAll(){
             return $this->db->request('delete_lignes_entries');
         }
         function select($id){
             return $this->db->request('select_lignes_entry',$id);
         }
-        function selectAll($ligne){
-            return $this->db->request('select_lignes_entry_by_entite',$ligne);
+        function selectAllByEntite($entite){
+            return $this->db->request('select_lignes_entry_by_entite',$entite);
         }
-        function getfeed($ligne){
+        function selectAll(){
+            return $this->db->request('select_lignes_entries');
+        }
+        function getfeed($entite){
             $feed = [];
             $ligneentiteclass = $this->entitor->getobj('ligne');
-            foreach($this->selectAll($ligne) as $ligneentite){
+            foreach($this->selectAllByEntite($entite) as $ligneentite){
                 array_push($feed,new $ligneentiteclass($this,$ligneentite));
             }
             return $feed;
