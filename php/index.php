@@ -8,6 +8,9 @@
 <body>
 <style>
     .table{
+        display:flex;
+    }
+    .ligne{
         display: grid;
         grid-template-columns:var(--columns);
     }
