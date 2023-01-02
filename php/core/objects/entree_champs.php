@@ -3,12 +3,12 @@
     class EntitorEntreeChamps extends EntitorObject{
         
         function updateval($value){
-            echo $this->manager->updateval($this->get('id'),$value);
+            return $this->manager->updateval($this->get('id'),$value);
             
         }
         function makerender(){
             return "
-            <div id='entree_champs_".$this->get("id")."'>
+            <div id='entree_champs_".$this->get("id")."' class='colonne'>
                 ".$this->get('valeur')."
             </div>
             ";

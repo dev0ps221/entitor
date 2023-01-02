@@ -5,7 +5,7 @@
         
         function makerender(){
             return "
-            <div id='ligne".$this->get("id")."'>
+            <div id='ligne".$this->get("id")."' class='ligne' style='--columns:repeat(".count($this->getchamps()).",1fr)'>
                 ".
                 implode('',array_map(
                     function($entree){

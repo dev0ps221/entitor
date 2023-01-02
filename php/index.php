@@ -8,11 +8,14 @@
 <body>
 <style>
     .table{
-        display:flex;
+        display:grid;
     }
     .ligne{
         display: grid;
         grid-template-columns:var(--columns);
+    }
+    .ligne .colonne{
+        border:1px solid #399;
     }
 </style>
 <?php
@@ -22,7 +25,11 @@
     
     $id = 1;
     $tableau = $entites->select($id);
-    $tableau->getlignes()[0]->editentree(5,'test');
+    $tableau->getlignes()[0]->editentree(1,'test');
+    $tableau->getlignes()[0]->editentree(2,'test2');
+    $tableau->getlignes()[0]->editentree(3,'test3');
+    $tableau->getlignes()[0]->editentree(4,'test4');
+    $tableau->getlignes()[0]->editentree(5,'test5');
     echo $tableau->makerender();
 
 ?>
