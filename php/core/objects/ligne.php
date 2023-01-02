@@ -2,7 +2,20 @@
     include_once(dirname(__FILE__)."/objskel.php");
     class EntitorLigne extends EntitorObject{
         private $champs = null;
-
+        
+        function makerender(){
+            return "
+            <div id='ligne".$this->get("id")."'>
+                ".
+                implode('',array_map(
+                    function($entree){
+                        return $entree->makerender();
+                    },$this->getentree()
+                ))  
+                ."
+            </div>
+            ";
+        }
         function addentree(){
             foreach($this->getchamps() as $champs){
                 $idchamps = $champs->get('id');
@@ -14,7 +27,7 @@
             return $this->getentree();  
         }
         function editentree($champs,$valeur){
-            $entree = $this->champs->select($champs);
+            $entree = $this->entrees->select($champs);
             return $entree->updateval($valeur);
         }
         function delentree($valeur,$type){
@@ -22,7 +35,7 @@
         }
         function getentree(){
             $entree = [];
-            return $this->entrees->selectAll($this->get('id'));
+            return $this->entrees->getfeed($this->get('id'));
         }
         function getchamps(){
             return $this->entite->getchamps();

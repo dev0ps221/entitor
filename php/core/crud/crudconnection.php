@@ -100,13 +100,13 @@ class CrudConnection{
             $fname = "update_$tail";
             $this->{$fname} = function($funcname,$value,$where=""){
                 $funcnamearr = explode("_",$funcname);
-                $tbname = $funcnamearr[1];
-                array_shift($funcnamearr);
-                array_shift($funcnamearr);
-                $fieldname = implode('_',$funcnamearr);
+                $fieldname = count($funcnamearr) ? $funcnamearr[count($funcnamearr)-1] : $funcnamearr;
+                $tbname = preg_replace("#_$fieldname#","",$funcname);
+                $tbname = explode('_',$tbname);
+                array_shift($tbname);
+                $tbname = implode('_',$tbname);
                 $field = $this->gettablefielddata($tbname,$fieldname);
-                $fieldname = $field['Field'];
-                error_log($fieldname. ' is the updated field');
+                
                 $req = "UPDATE $tbname set $fieldname = ";
                 $value=addslashes($value);
                 if(in_array($field['Field'],['password','pwd','pass'])){

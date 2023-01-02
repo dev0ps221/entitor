@@ -31,12 +31,12 @@
         }
         function updateval($id,$value){
             $action = "update_entrees_champs_entites_valeur";
-            return $this->db->request($action,"'$value'","id = $id");    
+            return $this->db->request($action,"$value","id = $id");    
         }
-        function getfeed(){
+        function getfeed($ligne){
             $feed = [];
             $entreeclass = $this->entitor->getobj('entree_champs');
-            foreach($this->selectAll($this->get('ligne')) as $entree){
+            foreach($this->selectAll($ligne) as $entree){
                 array_push($feed,new $entreeclass($this,$entree));
             }
             return $feed;

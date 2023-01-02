@@ -4,6 +4,13 @@
         function addentree($valeur,$type){
             return $this->entrees->createNew($valeur,$this->get('id'),$type);
         }
+        function makerender(){
+            return "
+            <div id='champs".$this->get("id")."'>
+                ".$this->get('titre')."
+            </div>
+            ";
+        }
         function __construct($manager,$data){
             parent::__construct($manager,$data);
             $this->entrees = $manager->entitor->getmod('entrees_champs');

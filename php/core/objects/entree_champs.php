@@ -6,6 +6,13 @@
             echo $this->manager->updateval($this->get('id'),$value);
             
         }
+        function makerender(){
+            return "
+            <div id='entree_champs_".$this->get("id")."'>
+                ".$this->get('valeur')."
+            </div>
+            ";
+        }
         function __construct($manager,$data){
             parent::__construct($manager,$data);
         }
