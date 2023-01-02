@@ -26,5 +26,34 @@
         padding:2.5%;
     }
 </style>
+<section id="view">
+
+</section>
+<script>
+    function _ajaxpost_(action,data,cb){
+        const req = new XMLHttpRequest()
+        const formdata = new FormData()
+        formdata.append('action',action)
+        Object.keys(data).forEach(
+            key=>{
+                formdata.append(key,data[key])
+            }
+        )
+        req.addEventListener(
+            'load',e=>cb(e,req)
+        )
+        req.open('post','/app.php')
+        req.send(formdata)
+    }
+    const data = {id:1,canedit:1}
+    _ajaxpost_(
+        'rendertable',
+        data,
+        (e,req)=>{
+            document.querySelector('#view').innerHTML = req.response
+        }
+    )
+    
+</script>
 </body>
 </html>
