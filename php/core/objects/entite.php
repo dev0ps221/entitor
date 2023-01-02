@@ -8,7 +8,7 @@
         }
         function makerender(){
             return "
-            <div id='tableau".$this->get("id")."' class='tableau'>
+            <div id='tableau".$this->get("id")."' class='table'>
             
                 <div class='ligne_labels ligne' style='--columns:repeat(".count($this->getchamps()).",1fr)'>
                     ".

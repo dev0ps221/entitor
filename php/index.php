@@ -8,7 +8,9 @@
 <body>
 <style>
     .table{
+        background:red;
         display:grid;
+        width:800px;
     }
     .ligne{
         display: grid;
@@ -16,6 +18,8 @@
     }
     .ligne .colonne{
         border:1px solid #399;
+        min-height:20px;
+        padding:2.5%;
     }
 </style>
 <?php
@@ -23,13 +27,7 @@
     $entitor        = new Entitor([]);
     $entites        = $entitor->getmod('entites');
     
-    $id = 1;
-    $tableau = $entites->select($id);
-    $tableau->getlignes()[0]->editentree(1,'test');
-    $tableau->getlignes()[0]->editentree(2,'test2');
-    $tableau->getlignes()[0]->editentree(3,'test3');
-    $tableau->getlignes()[0]->editentree(4,'test4');
-    $tableau->getlignes()[0]->editentree(5,'test5');
+    $tableau = $entites->select(1);
     echo $tableau->makerender();
 
 ?>
