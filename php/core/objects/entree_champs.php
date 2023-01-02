@@ -6,10 +6,15 @@
             return $this->manager->updateval($this->get('id'),$value);
             
         }
-        function makerender(){
+        function makerender($canedit){
             return "
             <div id='entree_champs_".$this->get("id")."' class='colonne'>
-                ".$this->get('valeur')."
+                ".(
+                    $canedit    ?
+                            "<input type='text' value='".$this->get('valeur')."'/>"
+                        :
+                            $this->get('valeur')
+                )."  
             </div>
             ";
         }

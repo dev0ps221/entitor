@@ -9,28 +9,22 @@
 <style>
     .table{
         display:grid;
-        width:800px;
-        border:3px solid #1cc;
+        min-width:800px;
+        overflow: scroll;
+        border:3px double #1cc;
+    }
+    .table *{
+        display: grid;
     }
     .ligne{
-        display: grid;
         grid-template-columns:var(--columns);
     }
     .ligne .colonne{
-        border:1px solid #1dd;
+        border:3px double #1dd;
         background:#3992;
         min-height:20px;
         padding:2.5%;
     }
 </style>
-<?php
-    include('core/entitor.php');
-    $entitor        = new Entitor([]);
-    $entites        = $entitor->getmod('entites');
-    
-    $tableau = $entites->select(1);
-    echo $tableau->makerender();
-
-?>
 </body>
 </html>

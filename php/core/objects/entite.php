@@ -6,7 +6,11 @@
             $ligne = $this->lignes->createNew($this->get('id'));
             return $ligne->addentree();
         }
-        function makerender(){
+        function makerender($canedit=true,$buildedit=null){
+            $lignes = [];
+            foreach($this->getlignes() as $ligne){
+                array_push($lignes,$ligne->makerender($canedit));
+            };
             return "
             <div id='tableau".$this->get("id")."' class='table'>
             
@@ -21,17 +25,13 @@
                     ".
                     implode('',array_map(
                         function($champs){
-                            return $champs->makerender();
+                            return $champs->makerender($buildedit);
                         },$this->getchamps()
                     ))  
                     ."
                 </div>
                     ".
-                    implode('',array_map(
-                        function($ligne){
-                            return $ligne->makerender();
-                        },$this->getlignes()
-                    ))  
+                    implode('',$lignes)  
                     ."
             </div>
             ";

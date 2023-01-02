@@ -2,6 +2,7 @@
     include_once(dirname(__FILE__)."/entitordatabase.php");
     include_once(dirname(__FILE__)."/entitormodules.php");
     include_once(dirname(__FILE__)."/entitorobjects.php");
+    include_once(dirname(__FILE__)."/entitorajax.php");
     class Entitor{
         private $modules = null;
         private $objects = null;
@@ -47,6 +48,7 @@
             $this->dbstuff();
             $this->modules = new EntitorModules($this);
             $this->objects = new EntitorObjects($this);
+            $this->ajax = new EntitorAjax($this);
         }
         
 

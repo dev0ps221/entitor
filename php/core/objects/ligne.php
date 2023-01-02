@@ -3,15 +3,15 @@
     class EntitorLigne extends EntitorObject{
         private $champs = null;
         
-        function makerender(){
+        function makerender($canedit){
+            $entrees = [];
+            foreach($this->getentree() as $entree){
+                array_push($entrees,$entree->makerender($canedit));
+            }
             return "
             <div id='ligne".$this->get("id")."' class='ligne' style='--columns:repeat(".count($this->getchamps()).",1fr)'>
                 ".
-                implode('',array_map(
-                    function($entree){
-                        return $entree->makerender();
-                    },$this->getentree()
-                ))  
+                implode('',$entrees)  
                 ."
             </div>
             ";
