@@ -10,7 +10,7 @@
         }
         function __construct($manager,$data){
             parent::__construct($manager,$data);
-            $this->lignes = $manager->entitor->getmod('entrees_lignes');
+            $this->lignes = $manager->entitor->getmod('lignes');
             $this->champs = $manager->entitor->getmod('champs_entites');
         }
     }

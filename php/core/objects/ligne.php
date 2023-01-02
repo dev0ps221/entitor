@@ -4,7 +4,8 @@
         private $champs = null;
 
         function addentree($valeur,$type){
-            return $this->manager->createNew($valeur,$this->get('id'),$type);
+            $id = $this->manager->createNew($valeur,$this->get('id'),$type);
+            return $this->getentree();  
         }
         function delentree($valeur,$type){
             return $this->manager->delete($valeur,$this->get('id'));
