@@ -15,7 +15,8 @@
             return $this->db->request('delete_entites_entry_by_titre',"$titre");
         }
         function select($id){
-            return $this->db->request('select_entites_entry',$id);
+            $entiteclass = $this->entitor->getobj('entite');
+            return new $entiteclass($this,$this->db->request('select_entites_entry',$id));
         }
         function selectAll(){
             return $this->db->request('select_entites_entries');
@@ -28,8 +29,8 @@
             return $this->db->request($action,"'$value'","id = $id");
         }
         function setfeed(){
-            $feed = [];
             $entiteclass = $this->entitor->getobj('entite');
+            $feed = [];
             foreach($this->selectAll() as $entite){
                 array_push($feed,new $entiteclass($this,$entite));
             }

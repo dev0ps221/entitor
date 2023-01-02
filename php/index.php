@@ -3,8 +3,7 @@
     $entitor        = new Entitor([]);
     $entites        = $entitor->getmod('entites');
     
-    $id = $entites->create('test');
-    echo $id;
-    print_r($entites->getfeed());
+    $id = 1;
+    print_r($entites->select($id));
 
 ?>
