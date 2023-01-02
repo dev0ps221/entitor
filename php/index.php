@@ -4,6 +4,6 @@
     $entites        = $entitor->getmod('entites');
     
     $id = 1;
-    print_r($entites->select($id));
+    $tableau = $entites->select($id);
 
 ?>

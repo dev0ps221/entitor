@@ -15,7 +15,10 @@
             return array_filter($this->db->request('delete_champs_entites_entry_by_entite',$entite),function ($elem){ return $elem['titre'] == $titre;});
         }
         function select($id){
-            return $this->db->request('select_champs_entites_entry',$id);
+            $champsentiteclass = $this->entitor->getobj('champs_entite');
+            $champsentite = $this->db->request('select_champs_entites_entry',$id);
+            $champsentite = $champsentite ? new $champsentiteclass($this, $champsentite[0]) : null;
+            return $champsentite;
         }
         function selectAll($entite){
             return $this->db->request('select_champs_entites_entry_by_entite',$entite);

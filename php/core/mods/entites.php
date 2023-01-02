@@ -16,7 +16,9 @@
         }
         function select($id){
             $entiteclass = $this->entitor->getobj('entite');
-            return new $entiteclass($this,$this->db->request('select_entites_entry',$id));
+            $entite = $this->db->request('select_entites_entry',$id);
+            $entite = $entite ? new $entiteclass($this, $entite[0]) : null;
+            return $entite;
         }
         function selectAll(){
             return $this->db->request('select_entites_entries');

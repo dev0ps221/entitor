@@ -2,7 +2,7 @@
     include_once(dirname(__FILE__)."/modskel.php");
     class EntitorLignes extends EntitorModule{
         function createNew($entite){
-            return $this->db->request('insert_into_lignes',['entite'=>$entite]);
+            return $this->select($this->db->request('insert_into_lignes',['entite'=>$entite]));
         }
         function delete($id){
             return $this->db->request('delete_lignes_entry',$id);
@@ -14,7 +14,10 @@
             return $this->db->request('delete_lignes_entries');
         }
         function select($id){
-            return $this->db->request('select_lignes_entry',$id);
+            $ligneentiteclass = $this->entitor->getobj('ligne');
+            $ligne =  $this->db->request('select_lignes_entry',$id);
+            $ligne = $ligne ? new $ligneentiteclass($this, $ligne[0]) : null;
+            return $ligne;
         }
         function selectAllByEntite($entite){
             return $this->db->request('select_lignes_entry_by_entite',$entite);
