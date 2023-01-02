@@ -24,7 +24,7 @@
         }
         function updatefield($id,$field,$value){
             $action = "update_entrees_champs_entites_$field";
-            return $this->db->request($action,"'$value'");    
+            return $this->db->request($action,"'$value'","id = $id");    
         }
         function getfeed($champs){
             $feed = [];

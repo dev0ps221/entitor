@@ -4,7 +4,7 @@
         function update($fields=[]){
             foreach ($fields as $key => $field) {
                 $value = $fields[$field];
-                $udpdatefunc = "update_entrees_champs_entites_$field";
+                $this->manager->updatefield($this->get('id'),$field,$value);
                 echo $udpdatefunc; 
             }
         }
