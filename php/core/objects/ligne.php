@@ -14,7 +14,6 @@
             foreach($this->entrees->selectAll($this->get('entree')) as $champs){
                 // $this->champs->get
             }
-            
             return $this->entrees->selectAll($this->get('id'));
         }
         function __construct($manager,$data){
