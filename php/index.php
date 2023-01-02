@@ -8,16 +8,17 @@
 <body>
 <style>
     .table{
-        background:red;
         display:grid;
         width:800px;
+        border:3px solid #1cc;
     }
     .ligne{
         display: grid;
         grid-template-columns:var(--columns);
     }
     .ligne .colonne{
-        border:1px solid #399;
+        border:1px solid #1dd;
+        background:#3992;
         min-height:20px;
         padding:2.5%;
     }

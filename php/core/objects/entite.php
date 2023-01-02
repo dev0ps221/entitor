@@ -10,6 +10,13 @@
             return "
             <div id='tableau".$this->get("id")."' class='table'>
             
+                <div class='ligne' style='--columns:1fr;'>
+                    <div class='colonne'>
+                        ".
+                            $this->get('titre')
+                        ."
+                    </div>
+                </div>
                 <div class='ligne_labels ligne' style='--columns:repeat(".count($this->getchamps()).",1fr)'>
                     ".
                     implode('',array_map(
