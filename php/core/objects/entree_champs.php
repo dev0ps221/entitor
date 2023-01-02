@@ -4,8 +4,7 @@
         function update($fields=[]){
             foreach ($fields as $key => $field) {
                 $value = $fields[$field];
-                $this->manager->updatefield($this->get('id'),$field,$value);
-                echo $udpdatefunc; 
+                echo $this->manager->updatefield($this->get('id'),$field,$value);
             }
         }
         function __construct($manager,$data){

@@ -6,6 +6,9 @@
         function addentree($valeur,$type){
             return $this->entrees->createNew($valeur,$this->get('id'),$type);
         }
+        function getentrees(){
+            return $this->entrees->selectAll($this->get('id'));
+        }
         function __construct($manager,$data){
             parent::__construct($manager,$data);
             $this->champs = $manager->entitor->getmod('champs_entites');
