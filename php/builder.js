@@ -14,7 +14,7 @@ class EntitorBuilder{
 
     }
     addchampsrender(){
-        
+        const ajouter_champs = this.ajouter_champs
         const render = `<div id='ajouter_champs'>
                 <h3>
                     creer un champs
@@ -23,7 +23,7 @@ class EntitorBuilder{
                     <label for='titre_champs'> titre un champs</label>
                     <input type='text' name='titre_champs' placeholder='nouveau_champs'>
                 </div>
-                <button onclick='ajouterchamps(${this->tableau})'>
+                <button onclick='ajouterchamps(event)'>
                     creer
                 </button>
             </div>
