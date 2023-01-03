@@ -2,10 +2,17 @@ class EntitorClient {
 
     actualtable = 1
     actualcanedit = 1
+    _builders = []
     Builder = class EntitorBuilder{
-        constructor(target){
-            this.target
+        constructor(client,target){
+            this.client = client
+            this.target = target
         }
+    }
+    newBuilder(target){
+        const builder = new this.Builder(this,target)
+        this._builders.push(builder)
+        return builder
     }
     _ajaxpost_(action,data,cb){
         const req = new XMLHttpRequest()
