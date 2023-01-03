@@ -71,6 +71,13 @@
             }
         )
     }
+    function addcolonne(){
+        _ajaxpost_(
+            'addcolonne',{id:actualtable},(e,req)=>{
+                refreshTable()
+            }
+        )
+    }
     function createtableau(titre){
         _ajaxpost_(
             'createtableau',{titre},(e,req)=>{
