@@ -1,20 +1,18 @@
-class EntitorClient {
 
+class EntitorClient {
+    actualvolet = null
     actualtable = null
     actualcanedit = 1
     _builders = []
-    Builder = class EntitorBuilder{
-        constructor(client,target,volet){
-            this.client = client
-            this.target = target
-            this.volet = volet
-        }
-    }
+    Builder = (typeof EntitorBuilder != 'undefined') ? EntitorBuilder : null
     newBuilder(target,volet){
-        volet = volet ? volet : this.actualvolet
-        const builder = new this.Builder(this,target,volet)
-        this._builders.push(builder)
-        return builder
+        if(this.Builder){
+            volet = volet ? volet : this.actualvolet
+            const builder = new this.Builder(this,target,volet)
+            this._builders.push(builder)
+            return builder
+        }
+        console.log('EntitorBuilder support is not loaded')
     }
     _ajaxpost_(action,data,cb){
         const req = new XMLHttpRequest()

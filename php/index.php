@@ -31,6 +31,8 @@
 </section>
 <script src='/client.js'>
 </script>
+<script src='/builder.js'>
+</script>
 <script>
     const entitor = new EntitorClient()
     const builder = entitor.newBuilder(document.querySelector('#view'),1)
