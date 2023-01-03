@@ -8,6 +8,13 @@
                 ,[
                     ['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key'],
                     ['name'=>'titre','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
+                    ['name'=>'volet','type'=>'int','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
+                ]
+            ],[
+                'volets'
+                ,[
+                    ['name'=>'id','type'=>'int','extra'=>'auto_increment','null'=>null,'default'=>null,'keys'=>'primary key'],
+                    ['name'=>'titre','type'=>'text','extra'=>null,'null'=>null,'default'=>null,'keys'=>null],
                 ]
             ],
             [
