@@ -1,16 +1,18 @@
 class EntitorClient {
 
-    actualtable = 1
+    actualtable = null
     actualcanedit = 1
     _builders = []
     Builder = class EntitorBuilder{
-        constructor(client,target){
+        constructor(client,target,volet){
             this.client = client
             this.target = target
+            this.volet = volet
         }
     }
-    newBuilder(target){
-        const builder = new this.Builder(this,target)
+    newBuilder(target,volet){
+        volet = volet ? volet : this.actualvolet
+        const builder = new this.Builder(this,target,volet)
         this._builders.push(builder)
         return builder
     }
@@ -51,21 +53,37 @@ class EntitorClient {
         )
     }
     addcolonne(cb=(e,req)=>{this.refreshTable()}){
-        this._ajaxpost_(
-            'addcolonne',{id:this.actualtable},cb
-        )
+        if(this.actualtable){
+            this._ajaxpost_(
+                'addcolonne',{id:this.actualtable},cb
+            )
+        }
     }
     createtableau(titre,cb=(e,req)=>{this.actualtable = req.response;this.refreshTable()}){
+        if(this.actualvolet){
+            this._ajaxpost_(
+                'createtableau',{titre,id:this.actualvolet},cb
+            )
+        }
+    }
+    createvolet(titre,cb=(e,req)=>{this.actualvolet = req.response;}){
         this._ajaxpost_(
-            'createtableau',{titre},cb
+            'createvolet',{titre},(e,req)=>{
+                this.actualvolet = req.response
+                cb(e,req)
+            }
         )
     }
     refreshTable(canedit){
-        this.renderTable(this.actualtable,document.querySelector('#view'),this.actualcanedit)
+        if(this.actualtable){
+            this.renderTable(this.actualtable,document.querySelector('#view'),this.actualcanedit)
+        }
     }
     previewTableOn(target){
-        this.target = target
-        this.renderTable(this.actualtable,this.target)
+        if(this.actualtable){
+            this.target = target
+            this.renderTable(this.actualtable,this.target)
+        }
     }
     constructor(){
         this.refreshTable()

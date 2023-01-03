@@ -1,10 +1,9 @@
 <?php
     include_once(dirname(__FILE__)."/objskel.php");
-    class EntitorEntite extends EntitorObject{
+    class EntitorVolet extends EntitorObject{
         private $champs = null;
         function addentite($titre){
             return  $this->entites->createNew($titre,$this->get('id'));
-            
         }
         function makerender($canedit=true,$buildedit=null){
             $entites = [];
@@ -14,7 +13,7 @@
             return "";
         }
         function getentites(){
-            return $this->entites->getfeed($this->get('id'));
+            return $this->entites->getfeedvolet($this->get('id'));
         }
         function __construct($manager,$data){
             parent::__construct($manager,$data);

@@ -33,10 +33,22 @@
             $action = "update_entites_$field";
             return $this->db->request($action,"'$value'","id = $id");
         }
-        function setfeed($volet){
+        function setfeedvolet($volet){
             $entiteclass = $this->entitor->getobj('entite');
             $feed = [];
             foreach($this->selectbyvolet($volet) as $entite){
+                array_push($feed,new $entiteclass($this,$entite));
+            }
+            $this->feed = $feed;
+            return $feed;
+        }
+        function getfeedvolet($volet){
+            return $this->setfeedvolet($volet);
+        }
+        function setfeed(){
+            $entiteclass = $this->entitor->getobj('entite');
+            $feed = [];
+            foreach($this->selectAll() as $entite){
                 array_push($feed,new $entiteclass($this,$entite));
             }
             $this->feed = $feed;

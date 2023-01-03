@@ -8,7 +8,7 @@
                 echo $tableau->makerender(isset($canedit)?$canedit:null);
             }
             if($action == 'renamecolonne'){
-                
+
             }
             if($action == 'updatecolonne'){
                 $champs = $this->entitor->getmod('entrees_champs')->select($colonne);
@@ -25,7 +25,12 @@
                 echo $tableau->addligne();
             }
             if($action == 'createtableau'){
-                echo $this->entitor->getmod('entites')->createNew($titre);
+                $volets = $this->entitor->getmod('volets');
+                $volet = $volets->select($id);
+                echo $volet->addentite($titre);
+            }
+            if($action == 'createvolet'){
+                echo $this->entitor->getmod('volets')->createNew($titre);
             }
         }
         function __construct($entitor){
