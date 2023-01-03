@@ -4,6 +4,9 @@
         function addentree($valeur,$type){
             return $this->entrees->createNew($valeur,$this->get('id'),$type);
         }
+        function rename(){
+            
+        }
         function makerender(){
             return "
             <div id='champs".$this->get("id")."' class='colonne'>
