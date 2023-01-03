@@ -39,34 +39,25 @@ class EntitorClient {
             }
         )
     }
-    updatecolonne(colonne,valeur){
+    updatecolonne(colonne,valeur,cb=(e,req)=>{this.refreshTable()}){
         const updatedata = {colonne,valeur}
         this._ajaxpost_(
-            'updatecolonne',updatedata,(e,req)=>{
-                this.refreshTable()
-            }
+            'updatecolonne',updatedata,cb
         )
     }
-    addligne(){
+    addligne(cb=(e,req)=>{this.refreshTable()}){
         this._ajaxpost_(
-            'addligne',{id:this.actualtable},(e,req)=>{
-                this.refreshTable()
-            }
+            'addligne',{id:this.actualtable},cb
         )
     }
-    addcolonne(){
+    addcolonne(cb=(e,req)=>{this.refreshTable()}){
         this._ajaxpost_(
-            'addcolonne',{id:this.actualtable},(e,req)=>{
-                this.refreshTable()
-            }
+            'addcolonne',{id:this.actualtable},cb
         )
     }
-    createtableau(titre){
+    createtableau(titre,cb=(e,req)=>{this.actualtable = req.response;this.refreshTable()}){
         this._ajaxpost_(
-            'createtableau',{titre},(e,req)=>{
-                this.actualtable = req.response
-                this.refreshTable()
-            }
+            'createtableau',{titre},cb
         )
     }
     refreshTable(canedit){

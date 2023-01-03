@@ -2,8 +2,8 @@
     include_once(dirname(__FILE__)."/modskel.php");
      
     class EntitorEntites extends EntitorModule{
-        function createNew($titre){
-            return $this->db->request('insert_into_entites',['titre'=>$titre]);
+        function createNew($titre,$volet){
+            return $this->db->request('insert_into_entites',['titre'=>$titre,'volet'=>$volet]);
         }
         function delete($id){
             return $this->db->request('delete_entites_entry',$id);
