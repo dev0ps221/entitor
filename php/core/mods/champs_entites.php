@@ -2,8 +2,8 @@
     include_once(dirname(__FILE__)."/modskel.php");
     class EntitorChampsEntites extends EntitorModule{
         
-        function createNew($titre,$entite,$type){
-            return $this->db->request('insert_into_champs_entites',['titre'=>$titre,'entite'=>$entite,'type'=>$type]);
+        function createNew($titre,$entite,$type,$reftable=null){
+            return $this->db->request('insert_into_champs_entites',['titre'=>$titre,'entite'=>$entite,'type'=>$type,'reftable'=>$reftable]);
         }
         function delete($id){
             return $this->db->request('delete_champs_entites_entry',$id);

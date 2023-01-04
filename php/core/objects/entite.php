@@ -36,8 +36,12 @@
             </div>
             ";
         }
-        function addchamps($titre,$type){
-            return $this->champs->createNew($titre,$this->get('id'),$type);
+        function addchamps($titre,$type,$reftable=null){
+            if($reftable){
+                
+            }else{
+                return $this->champs->createNew($titre,$this->get('id'),$type,$reftable);
+            }
         }
         function renamechamps($titre){
             return $this->champs->updatefield($this->get('id'),'titre',$titre);
