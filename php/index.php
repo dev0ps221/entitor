@@ -36,6 +36,10 @@
 <script>
     const entitor = new EntitorClient()
     const builder = entitor.newBuilder(document.querySelector('#view'),1)
+    builder.settableau(2)
+    builder.renderTable()
+    document.body.appendChild(builder.ajouter_champs_elem())
+    document.body.appendChild(builder.ajouter_ligne_elem())
 </script>
 </body>
 </html>

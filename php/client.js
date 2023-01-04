@@ -50,10 +50,10 @@ class EntitorClient {
             'addligne',{id:this.actualtable},cb
         )
     }
-    addcolonne(cb=(e,req)=>{this.refreshTable()}){
+    addcolonne(titre,type,cb=(e,req)=>{this.refreshTable()}){
         if(this.actualtable){
             this._ajaxpost_(
-                'addcolonne',{id:this.actualtable},cb
+                'addcolonne',{id:this.actualtable,titre,type},cb
             )
         }
     }

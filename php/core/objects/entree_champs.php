@@ -11,7 +11,7 @@
             <div id='entree_champs_".$this->get("id")."' class='colonne'>
                 ".(
                     $canedit    ?
-                            "<input type='text' onchange='updatecolonne(".$this->get('id').",event.target.value)' value='".$this->get('valeur')."'/>"
+                            "<input type='text' onchange='if(typeof builder !='undefined') builder.updateColonne(".$this->get('id').",event.target.value)' value='".$this->get('valeur')."'/>"
                         :
                             $this->get('valeur')
                 )."  

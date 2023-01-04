@@ -10,41 +10,93 @@ class EntitorBuilder{
             }
         )
     }
-    ajouter_champs(event){
-
+    ajouter_champs(titre,type){
+        if(this.volet){
+            if(this.tableau){
+                if(titre){
+                    if(type){
+                        const actualtable = this.client.actualtable
+                        this.client.actualtable = this.tableau
+                        this.client.addcolonne(
+                            titre,type,(e,req)=>{
+                                this.client.actualtable = actualtable
+                                this.renderTable()
+                            }
+                        )
+                    }
+                }
+            }
+        }
     }
     ajouter_champs_elem(){
         const ajouter_champs = document.createElement('div')
         ajouter_champs.id = 'ajouter_champs'
         const label_ajouter_champs = document.createElement('h3')
-        label_ajouter_champs.innerHTML = 'créer un champs' 
-        label_ajouter_champs.classList.
-        const optionbox = document.createElement('div')
-        optionbox.id = 
-        optionbox.classList.
+        label_ajouter_champs.innerHTML = 'créer un champs'
+        const titrebox = document.createElement('div')
+        titrebox.classList.add('option')
+        const typebox = document.createElement('div')
+        typebox.classList.add('option')
         const label_titre = document.createElement('label')
-        label_titre.id = 
-        label_titre.classList.
+        label_titre.innerHTML = 'titre du champs' 
+        label_titre.for = 'titre_champs'
+        const label_type = document.createElement('label')
+        label_type.innerHTML = 'type du champs' 
+        label_type.for = 'type_champs'
         const titre = document.createElement('input')
-        titre.id = 
-        titre.classList.
+        titre.name = 'titre_champs' 
+        titre.type = 'text'
+        const type = document.createElement('select')
+        const textoption = document.createElement('option')
+        textoption.value = 'texte'
+        textoption.innerHTML = 'texte'
+        const tableoption = document.createElement('option')
+        tableoption.value = 'tableau'
+        tableoption.innerHTML = 'tableau'
+        type.appendChild(textoption)
+        type.appendChild(tableoption)
         const action = document.createElement('button')
-        action.id = 
-        action.classList.
-        const addchamps : `<div id='ajouter_champs'>
-                <h3>
-                    creer un champs
-                </h3>
-                <div class='option'>
-                    <label for='titre_champs'> titre un champs</label>
-                    <input type='text' name='titre_champs' placeholder='nouveau_champs'>
-                </div>
-                <button onclick='ajouterchamps(event)'>
-                    creer
-                </button>
-            </div>
-        `;
-        return render;
+        action.innerHTML = 'ajouter' 
+        action.addEventListener(
+            'click',e=>this.ajouter_champs(titre.value,type.value)
+        )
+        ajouter_champs.appendChild(label_ajouter_champs)
+        titrebox.appendChild(label_titre)
+        titrebox.appendChild(titre)
+        typebox.appendChild(label_type)
+        typebox.appendChild(type)
+        ajouter_champs.appendChild(titrebox)
+        ajouter_champs.appendChild(typebox)
+        ajouter_champs.appendChild(action)
+        return ajouter_champs;
+    }
+    ajouter_ligne(){
+        if(this.volet){
+            if(this.tableau){
+                const actualtable = this.client.actualtable
+                this.client.actualtable = this.tableau
+                this.client.addligne(
+                    (e,req)=>{
+                        this.client.actualtable = actualtable
+                        this.renderTable()
+                    }
+                )
+            }
+        }
+    }
+    ajouter_ligne_elem(){
+        const ajouter_ligne = document.createElement('div')
+        ajouter_ligne.id = 'ajouter_ligne'
+        const label_ajouter_ligne = document.createElement('h3')
+        label_ajouter_ligne.innerHTML = 'créer un ligne'
+        const action = document.createElement('button')
+        action.innerHTML = 'ajouter' 
+        action.addEventListener(
+            'click',e=>this.ajouter_ligne()
+        )
+        ajouter_ligne.appendChild(label_ajouter_ligne)
+        ajouter_ligne.appendChild(action)
+        return ajouter_ligne;
     }
     renderTable(tableau=null){
         tableau = tableau != null ? tableau : this.tableau
