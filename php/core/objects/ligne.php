@@ -3,9 +3,9 @@
     class EntitorLigne extends EntitorObject{
         private $champs = null;
         
-        function makerender($canedit){
+        function makerender($canedit,$idx){
             $entrees = [];
-            foreach($this->getentree() as $entree){
+            foreach($this->getentree() as $i=>$entree){
                 array_push($entrees,$entree->makerender($canedit));
             }
             return "
@@ -22,7 +22,13 @@
                 $typechamps = $champs->get('type');
                 $ligne = $this->get('id');
                 $valeur = "";
-                $this->entrees->createNew($valeur,$idchamps,$ligne,$typechamps);
+                if($typechamps == 'texte'){
+                    $this->entrees->createNew($valeur,$idchamps,$ligne,$typechamps);
+                }
+                if($typechamps == 'tableau'){
+                    $newligne = $champs->reftable->addligne();
+                    $this->entrees->createNew($newligne->get('id'),$idchamps,$ligne,'entree');
+                }
             }
             return $this->getentree();  
         }

@@ -28,7 +28,7 @@
             $clone = $this->select($cloneid);
             $clone->set('id',$cloneid);
             foreach($entite->getchamps() as $champs){
-                $clone->addchamps($champs->get('titre'),$champs->get('type'),$champs->get('reftable'));
+                $clone->addchamps($champs->get('titre'),$champs->get('type'),($champs->get('reftable')?$champs->get('reftable'):'null'));
             }
             foreach($entite->getlignes() as $ligne){
                 $clone->addligne();

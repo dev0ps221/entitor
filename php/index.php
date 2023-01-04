@@ -23,7 +23,8 @@
         border:3px double #1dd;
         background:#3992;
         min-height:20px;
-        padding:2.5%;
+        /* padding:2.5%; */
+        margin:0;
     }
 </style>
 <?php

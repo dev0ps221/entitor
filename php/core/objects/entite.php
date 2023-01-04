@@ -4,12 +4,13 @@
         private $champs = null;
         function addligne(){
             $ligne = $this->lignes->createNew($this->get('id'));
-            return $ligne->addentree();
+            error_log($ligne->addentree());
+            return $ligne;
         }
         function makerender($canedit=true,$buildedit=null){
             $lignes = [];
-            foreach($this->getlignes() as $ligne){
-                array_push($lignes,$ligne->makerender($canedit));
+            foreach($this->getlignes() as $idx=>$ligne){
+                array_push($lignes,$ligne->makerender($canedit,$idx));
             };
             return "
             <div id='tableau".$this->get("id")."' class='table'>
@@ -39,23 +40,26 @@
         }
         function addchamps($titre,$type,$reftable=null,$volet=null){
             if($type == 'tableau'){
-                $reftable = $reftable!=null ? $this->manager->entitor->getmod('entites')->clone($reftable,$titre,$volet) : 'null';
+                $reftable = $reftable!=null ? ($this->manager->entitor->getmod('entites')->clone($reftable,$titre,$volet))->get('id') : 'null';
+                error_log($reftable);
                 if($reftable == 'null'){
                     $type = 'texte';
                 }
+                if($type == 'tableau'){
+                    if(count($this->getlignes())){
+                        $table = $this->manager->entitor->getmod('entites')->select($reftable); 
+                        foreach($this->getlignes() as $i=>$ligne){
+                            $table->addligne();
+                        }
+                    }
+                }
             }
             $id = $this->champs->createNew($titre,$this->get('id'),$type,$reftable);
-            if(count($this->getlignes())){
-                if($type == 'texte'){
+            if($type == 'texte'){
+                if(count($this->getlignes())){
                     $entrees = $this->manager->entitor->getmod('entrees_champs');
                     foreach($this->getlignes() as $i=>$ligne){
                         $entrees->createNew('',$id,$ligne->get('id'),'text');
-                    }
-                }
-                if($type == 'tableau'){
-                    $table = $this->manager->entitor->getmod('entites')->select(); 
-                    foreach($this->getlignes() as $i=>$ligne){
-                        $table->addligne();
                     }
                 }
             }

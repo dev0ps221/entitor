@@ -22,7 +22,7 @@
             if($action == 'addligne'){
                 $entites = $this->entitor->getmod('entites');
                 $tableau = $entites->select($id);
-                echo $tableau->addligne();
+                echo $tableau->addligne()->getentree();
             }
             if($action == 'createtableau'){
                 $volets = $this->entitor->getmod('volets');
