@@ -28,6 +28,9 @@ class EntitorBuilder{
             }
         }
     }
+    updateColonne(colonne,valeur,cb=(e,req)=>{this.client.refreshTable()}){
+        this.client.updatecolonne(colonne,valeur,cb)
+    }
     ajouter_champs_elem(){
         const ajouter_champs = document.createElement('div')
         ajouter_champs.id = 'ajouter_champs'
