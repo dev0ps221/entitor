@@ -9,7 +9,7 @@
         }
         function makerender(){
             return "
-            <div id='champs".$this->get("id")."' class='colonne'>
+            <div id='champs".$this->get("id")."' class='colonne ".$this->get("type")."'>
                 ".$this->get('titre')."
             </div>
             ";
