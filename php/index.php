@@ -26,6 +26,11 @@
         padding:2.5%;
     }
 </style>
+<?php
+    // include('app.php');
+    // $entitor        = new Entitor([]);
+    // $entitor->getmod('entites')->clone(2,'champstableau',1);
+?>
 <section id="view">
 
 </section>
@@ -36,7 +41,7 @@
 <script>
     const entitor = new EntitorClient()
     const builder = entitor.newBuilder(document.querySelector('#view'),1)
-    builder.settableau(1)
+    builder.settableau(40)
     builder.renderTable()
     document.body.appendChild(builder.ajouter_champs_elem())
     document.body.appendChild(builder.ajouter_ligne_elem())

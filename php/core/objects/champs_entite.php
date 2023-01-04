@@ -5,13 +5,13 @@
             return $this->entrees->createNew($valeur,$this->get('id'),$type);
         }
         function rename(){
-            
+
         }
         function makerender(){
             return "
-            <div id='champs".$this->get("id")."' class='colonne ".$this->get("type")."'>
-                ".$this->get('titre')."
-            </div>
+                <div id='champs".$this->get("id")."' class='colonne ".$this->get("type")."'>
+                    ".$this->get('titre')."
+                </div>
             ";
         }
         function __construct($manager,$data){

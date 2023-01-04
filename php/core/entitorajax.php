@@ -17,7 +17,7 @@
             if($action == 'addcolonne'){
                 $entites = $this->entitor->getmod('entites');
                 $tableau = $entites->select($id);
-                echo $tableau->addchamps($titre,$type);
+                echo $tableau->addchamps($titre,$type,$ref,$volet);
             }
             if($action == 'addligne'){
                 $entites = $this->entitor->getmod('entites');
@@ -28,6 +28,14 @@
                 $volets = $this->entitor->getmod('volets');
                 $volet = $volets->select($id);
                 echo $volet->addentite($titre);
+            }
+            if($action == 'tables'){
+                $entites = $this->entitor->getmod('entites');
+                $res = [];
+                foreach($entites->getfeed() as $table){
+                    array_push($res,$table->retrieveData());
+                }
+                echo json_encode($res);
             }
             if($action == 'createvolet'){
                 echo $this->entitor->getmod('volets')->createNew($titre);

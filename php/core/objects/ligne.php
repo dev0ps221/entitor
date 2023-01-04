@@ -46,6 +46,7 @@
             $this->champs = $manager->entitor->getmod('champs_entites');
             $this->entrees = $manager->entitor->getmod('entrees_champs');
             $this->entite = $manager->entitor->getmod('entites')->select($this->get('entite'));
+            $this->entite->set('id',$this->get('entite'));
         }
     }
 ?>

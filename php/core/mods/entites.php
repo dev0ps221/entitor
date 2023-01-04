@@ -20,6 +20,31 @@
             $entite = $entite ? new $entiteclass($this, $entite[0]) : null;
             return $entite;
         }
+        function clone($id,$titre,$volet){
+            $entiteclass = $this->entitor->getobj('entite');
+            $entite = $this->db->request('select_entites_entry',$id);
+            $entite = $entite ? new $entiteclass($this, $entite[0]) : null;
+            $cloneid  = $this->createNew($titre,$volet);
+            $clone = $this->select($cloneid);
+            $clone->set('id',$cloneid);
+            foreach($entite->getchamps() as $champs){
+                $clone->addchamps($champs->get('titre'),$champs->get('type'),$champs->get('reftable'));
+            }
+            foreach($entite->getlignes() as $ligne){
+                $clone->addligne();
+            }
+            $lignesclone = $clone->getlignes();
+            foreach($lignesclone as $idx=>$ligneclone){
+                $lignes = $entite->getlignes();
+                $entree = $ligneclone->getentree();
+                $entreeligne = $lignes[$idx]->getentree();
+                foreach($entreeligne as $entree){
+                    $ligne->addentree();
+                    echo count($entree);
+                }
+            }
+            return $clone;
+        }
         function selectAll(){
             return $this->db->request('select_entites_entries');
         }

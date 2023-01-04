@@ -4,6 +4,7 @@ class EntitorClient {
     actualtable = null
     actualcanedit = 1
     _builders = []
+    _tables = []
     Builder = (typeof EntitorBuilder != 'undefined') ? EntitorBuilder : null
     newBuilder(target,volet){
         if(this.Builder){
@@ -50,10 +51,10 @@ class EntitorClient {
             'addligne',{id:this.actualtable},cb
         )
     }
-    addcolonne(titre,type,cb=(e,req)=>{this.refreshTable()}){
+    addcolonne(titre,type,ref,cb=(e,req)=>{this.refreshTable()}){
         if(this.actualtable){
             this._ajaxpost_(
-                'addcolonne',{id:this.actualtable,titre,type},cb
+                'addcolonne',{id:this.actualtable,volet:this.actualvolet,titre,type,ref},cb
             )
         }
     }
@@ -82,6 +83,14 @@ class EntitorClient {
             this.target = target
             this.renderTable(this.actualtable,this.target)
         }
+    }
+    getTables(cb){
+        this._ajaxpost_(
+            'tables',{},(e,req)=>{
+                this._tables = JSON.parse(req.response)
+                cb(this._tables)
+            }
+        )
     }
     constructor(){
         this.refreshTable()

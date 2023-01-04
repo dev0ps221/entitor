@@ -17,7 +17,7 @@
         }
 
         function get($name=null){
-            return array_key_exists($name,$this->dataset) ? $this->dataset[$name] : null;
+            return array_key_exists($name,$this->retrieveData()) ? $this->dataset[$name] : null;
         }
 
         function __construct($manager,$data){

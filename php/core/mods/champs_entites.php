@@ -3,7 +3,8 @@
     class EntitorChampsEntites extends EntitorModule{
         
         function createNew($titre,$entite,$type,$reftable=null){
-            return $this->db->request('insert_into_champs_entites',['titre'=>$titre,'entite'=>$entite,'type'=>$type,'reftable'=>$reftable]);
+            $id = $this->db->request('insert_into_champs_entites',['titre'=>$titre,'entite'=>$entite,'type'=>$type,'reftable'=>$reftable]);
+            return $id;
         }
         function delete($id){
             return $this->db->request('delete_champs_entites_entry',$id);
@@ -33,8 +34,11 @@
         function getfeed($entite){
             $feed = [];
             $champsentiteclass = $this->entitor->getobj('champs_entite');
-            foreach($this->selectAll($entite) as $champsentite){
-                array_push($feed,new $champsentiteclass($this,$champsentite));
+            $champssentite = $this->selectAll($entite);
+            if($champssentite and count($champssentite)){
+                foreach($champssentite as $champsentite){
+                    array_push($feed,new $champsentiteclass($this,$champsentite));
+                }
             }
             return $feed;
         }

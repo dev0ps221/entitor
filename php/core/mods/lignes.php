@@ -28,8 +28,11 @@
         function getfeed($entite){
             $feed = [];
             $ligneentiteclass = $this->entitor->getobj('ligne');
-            foreach($this->selectAllByEntite($entite) as $ligneentite){
-                array_push($feed,new $ligneentiteclass($this,$ligneentite));
+            $lignesentite = $this->selectAllByEntite($entite);
+            if($lignesentite and count($lignesentite)){
+                foreach($lignesentite as $ligneentite){
+                    array_push($feed,new $ligneentiteclass($this,$ligneentite));
+                }
             }
             return $feed;
         }

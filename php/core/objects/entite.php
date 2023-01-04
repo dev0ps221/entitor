@@ -17,7 +17,7 @@
                 <div class='ligne' style='--columns:1fr;'>
                     <div class='colonne'>
                         ".
-                            $this->get('titre')
+                            $this->get('titre') 
                         ."
                     </div>
                 </div>
@@ -25,6 +25,7 @@
                     ".
                     implode('',array_map(
                         function($champs){
+                            global $buildedit;
                             return $champs->makerender($buildedit);
                         },$this->getchamps()
                     ))  
@@ -36,12 +37,29 @@
             </div>
             ";
         }
-        function addchamps($titre,$type,$reftable=null){
-            if($reftable){
-                
-            }else{
-                return $this->champs->createNew($titre,$this->get('id'),$type,$reftable);
+        function addchamps($titre,$type,$reftable=null,$volet=null){
+            if($type == 'tableau'){
+                $reftable = $reftable!=null ? $this->manager->entitor->getmod('entites')->clone($reftable,$titre,$volet) : 'null';
+                if($reftable == 'null'){
+                    $type = 'texte';
+                }
             }
+            $id = $this->champs->createNew($titre,$this->get('id'),$type,$reftable);
+            if(count($this->getlignes())){
+                if($type == 'texte'){
+                    $entrees = $this->manager->entitor->getmod('entrees_champs');
+                    foreach($this->getlignes() as $i=>$ligne){
+                        $entrees->createNew('',$id,$ligne->get('id'),'text');
+                    }
+                }
+                if($type == 'tableau'){
+                    $table = $this->manager->entitor->getmod('entites')->select(); 
+                    foreach($this->getlignes() as $i=>$ligne){
+                        $table->addligne();
+                    }
+                }
+            }
+            return $id;
         }
         function renamechamps($titre){
             return $this->champs->updatefield($this->get('id'),'titre',$titre);
