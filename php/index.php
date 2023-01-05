@@ -26,8 +26,12 @@
         border:3px double #1dd;
         background:#3992;
         min-height:20px;
+        min-width:50px;
         /* padding:2.5%; */
         margin:0;
+    }
+    .colonne.table{
+        width: auto;
     }
 </style>
 <?php

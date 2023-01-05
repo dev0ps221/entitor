@@ -25,6 +25,9 @@
         function getobj($name){
             return $this->objs()->getobj($name);
         }
+        function map($id){
+
+        }
         function objs(){
             return $this->objects;
         }
