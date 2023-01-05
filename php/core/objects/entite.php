@@ -41,7 +41,6 @@
         function addchamps($titre,$type,$reftable=null,$volet=null){
             if($type == 'tableau'){
                 $reftable = $reftable!=null ? ($this->manager->entitor->getmod('entites')->clone($reftable,$titre,$volet))->get('id') : 'null';
-                error_log($reftable);
                 if($reftable == 'null'){
                     $type = 'texte';
                 }
@@ -69,7 +68,7 @@
             return $this->champs->updatefield($this->get('id'),'titre',$titre);
         }
         function updatetypechamps($type){
-            return $this->champs->updatefield($this->get('id'),'type',$type);
+            return $this->champs->updatefield($this->get('id'),'type',$type );
         }
         function getlignes(){
             return $this->lignes->getfeed($this->get('id'));

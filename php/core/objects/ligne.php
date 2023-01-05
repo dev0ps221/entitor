@@ -27,7 +27,7 @@
                         $ref->entrees->createNew($valeur,$idchamps,$ligne,$typechamps);
                     }
                     if($typechamps == 'tableau'){
-                        $newligne = $champs->reftable->addligne();
+                        $newligne = $this->manager->entitor->getmod('entites')->select($champs->get('reftable'))->addligne();
                         $processline($newligne,$processline);
                         $ref->entrees->createNew($newligne->get('id'),$idchamps,$ligne,'entree');
                     }
