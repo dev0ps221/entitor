@@ -17,19 +17,23 @@
             ";
         }
         function addentree(){
-            foreach($this->getchamps() as $champs){
-                $idchamps = $champs->get('id');
-                $typechamps = $champs->get('type');
-                $ligne = $this->get('id');
-                $valeur = "";
-                if($typechamps == 'texte'){
-                    $this->entrees->createNew($valeur,$idchamps,$ligne,$typechamps);
+            $processline = function ($ref,$processline){ 
+                foreach($ref->getchamps() as $champs){
+                    $idchamps = $champs->get('id');
+                    $typechamps = $champs->get('type');
+                    $ligne = $ref->get('id');
+                    $valeur = "";
+                    if($typechamps == 'texte'){
+                        $ref->entrees->createNew($valeur,$idchamps,$ligne,$typechamps);
+                    }
+                    if($typechamps == 'tableau'){
+                        $newligne = $champs->reftable->addligne();
+                        $processline($newligne,$processline);
+                        $ref->entrees->createNew($newligne->get('id'),$idchamps,$ligne,'entree');
+                    }
                 }
-                if($typechamps == 'tableau'){
-                    $newligne = $champs->reftable->addligne();
-                    $this->entrees->createNew($newligne->get('id'),$idchamps,$ligne,'entree');
-                }
-            }
+            };
+            $processline($this,$processline);
             return $this->getentree();  
         }
         function editentree($champs,$valeur){

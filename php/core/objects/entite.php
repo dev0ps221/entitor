@@ -4,7 +4,7 @@
         private $champs = null;
         function addligne(){
             $ligne = $this->lignes->createNew($this->get('id'));
-            error_log($ligne->addentree());
+            $ligne->addentree();
             return $ligne;
         }
         function makerender($canedit=true,$buildedit=null){
@@ -68,8 +68,8 @@
         function renamechamps($titre){
             return $this->champs->updatefield($this->get('id'),'titre',$titre);
         }
-        function updatetypechamps($titre){
-            return $this->champs->updatefield($this->get('id'),'titre',$titre);
+        function updatetypechamps($type){
+            return $this->champs->updatefield($this->get('id'),'type',$type);
         }
         function getlignes(){
             return $this->lignes->getfeed($this->get('id'));
