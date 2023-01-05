@@ -7,6 +7,10 @@
             $ligne->addentree();
             return $ligne;
         }
+        function newligne(){
+            $ligne = $this->lignes->createNew($this->get('id'));
+            return $ligne;
+        }
         function makerender($canedit=true,$buildedit=null){
             $lignes = [];
             foreach($this->getlignes() as $idx=>$ligne){

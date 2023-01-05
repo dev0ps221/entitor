@@ -21,6 +21,8 @@
         grid-template-columns:var(--columns);
     }
     .ligne .colonne{
+        display:flex;
+        flex-direction:column;
         border:3px double #1dd;
         background:#3992;
         min-height:20px;
@@ -43,7 +45,7 @@
 <script>
     const entitor = new EntitorClient()
     const builder = entitor.newBuilder(document.querySelector('#view'),1)
-    builder.settableau(40)
+    builder.settableau(53)
     builder.renderTable()
     document.body.appendChild(builder.ajouter_champs_elem())
     document.body.appendChild(builder.ajouter_ligne_elem())
