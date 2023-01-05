@@ -15,6 +15,7 @@
     }
     .table *{
         display: grid;
+        overflow:hidden;
     }
     .ligne{
         grid-template-columns:var(--columns);
