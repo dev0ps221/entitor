@@ -84,6 +84,8 @@
             parent::__construct($manager,$data);
             $this->lignes = $manager->entitor->getmod('lignes');
             $this->champs = $manager->entitor->getmod('champs_entites');
+            $this->sheet = $manager->entitor->getmod('sheets')->__newSheet($this);
+            
         }
     }
 ?>
