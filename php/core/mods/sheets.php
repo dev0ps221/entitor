@@ -1,9 +1,14 @@
 <?php
     include_once(dirname(__FILE__)."/modskel.php");
     class EntitorSheets extends EntitorModule{
-        
-        function __setentites(){
-            $this->entites = $this->entitor->getmod('entites');
+        private $sheets;
+        function __newSheet($entite){
+            $sheetclass = $this->entitor->getobj('sheet');
+            return $this->__addsheet($entite->get('titre'),new $sheetclass($this,$entite,$entite->retrieveData()));
+        }
+        function __addsheet($name,$sheet){
+            $this->sheets[$name] = $sheet;
+            return $sheet;
         }
         
         function __construct($entitor,$name,$conn){
