@@ -11,7 +11,7 @@
         private $modulespath=null;
         private $objectspath=null;
         function getmod($name){
-            return $this->mods()->getmod($name);
+            return $this->getmods()[$name];
         }
         function getmods(){
             return $this->mods()->getmods();
@@ -26,7 +26,7 @@
             return $this->objs()->getobj($name);
         }
         function map($id){
-
+            
         }
         function objs(){
             return $this->objects;
