@@ -7,6 +7,7 @@
             return $this->__addsheet($entite->get('titre'),new $sheetclass($this,$entite,$entite->retrieveData()));
         }
         function __addsheet($name,$sheet){
+            $sheet->set('name',$name);
             $this->sheets[$name] = $sheet;
             return $sheet;
         }
