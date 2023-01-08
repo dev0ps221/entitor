@@ -34,7 +34,7 @@
 <?php
     include('app.php');
     $entitor        = new Entitor([]);
-    $entite = $entitor->getmod('entites')->select(54);
+    $entite = $entitor->getmod('entites')->select(53);
     $entite->sheet->setup();
 ?>
 <section id="view">
