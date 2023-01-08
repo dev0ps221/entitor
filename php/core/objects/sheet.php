@@ -1,5 +1,6 @@
 <?php
     include_once(dirname(__FILE__)."/objskel.php");
+    include_once(dirname(__FILE__)."/../phpoffice/phpexcel/Classes/PHPExcel.php");
     class EntitorSheet extends EntitorObject{
         private $width = 0;
         private $height = 0;
@@ -8,6 +9,37 @@
             $this->learnDimensions();
             $this->setMap();
             $this->fillMap($this->entite);
+            // echo "<pre>";
+            // print_r($this->map);
+            // echo "</pre>";
+        }
+        function mapToFile($filename){
+            $tempfile = 'xlstmp_'.time().".xlsx";
+            $f = fopen($tempfile,'w');
+            fclose($f);
+            $reader = PHPExcel_IOFactory::createReader('Excel2007');
+            $phpExcel = $reader->load("./$tempfile");
+            // Get the first sheet
+            
+            $sheet = $phpExcel->createSheet();
+            $sheet = $phpExcel->getActiveSheet();
+            
+            $sheet->setTitle($this->get('titre'));
+            $writer = PHPExcel_IOFactory::createWriter($phpExcel, "Excel2007");
+            
+            foreach($this->map as $ligne){
+                foreach($ligne as $column){
+                    if(count($column)){
+                        $column['coords'];
+                        $column['coords'];
+                        $sheet->setCellValue($column['coords'],$column['valeur']);
+                    }
+                }
+                
+            }
+            $writer->save("./$tempfile");
+            rename($tempfile,$filename);
+        
         }
         function setMap(){
             $x = 0;
@@ -26,22 +58,50 @@
             $x = 0;
             $y = 0;
             $lignes = $entite->getlignes();
-            while($y < $this->height){
-                $entrees = $lignes[$y]->getentree();
+            $champs = $entite->getchamps();
+            $this->setAt($y,$x,'ligne', $y);    
+            $this->setAt($y,$x,'colonne', $x);        
+            $this->setAt($y,$x,'coords', chr(ord('a')+($x))."".($y+1));    
+            $this->setAt($y,$x,'valeur', $this->entite->get('titre'));
+            $y++;
+            foreach($champs as $champs){
+                $this->setAt($y,$x,'ligne', $y);    
+                $this->setAt($y,$x,'colonne', $x);        
+                $this->setAt($y,$x,'coords', chr(ord('a')+($x))."".($y+1));    
+                $this->setAt($y,$x,'valeur', $champs->get('titre'));   
+                $x++;
+            }
+            $y++;
+            foreach($lignes as $ligne){
+                $entrees = $ligne->getentree();
                 foreach($entrees as $entree){
                     if($entree->get('type') == 'entree'){
                         $entreesentree = $this->manager->entitor->getmod('lignes')->select($entree->get('valeur'))->getentree();
+                        $champsentree = $this->manager->entitor->getmod('lignes')->select($entree->get('valeur'))->getchamps();
+                        $this->setAt($y,$x,'ligne', $y);    
+                        $this->setAt($y,$x,'colonne', $x);        
+                        $this->setAt($y,$x,'coords', chr(ord('a')+($x))."".($y+1));    
+                        $this->setAt($y,$x,'valeur', $entree->get('titre'));
+                        $y++;
+                        foreach($champsentree as $champs){
+                            $this->setAt($y,$x,'ligne', $y);    
+                            $this->setAt($y,$x,'colonne', $x);        
+                            $this->setAt($y,$x,'coords', chr(ord('a')+($x))."".($y+1));    
+                            $this->setAt($y,$x,'valeur', $champs->get('titre'));   
+                            $x++;
+                        }
+                        $y++;
                         foreach($entreesentree as $entree){
                             $this->setAt($y,$x,'ligne', $y);    
                             $this->setAt($y,$x,'colonne', $x);    
-                            $this->setAt($y,$x,'coords', chr(ord('a')+($x)).":".($y+1));    
+                            $this->setAt($y,$x,'coords', chr(ord('a')+($x))."".($y+1));    
                             $this->setAt($y,$x,'valeur', $entree->get('valeur'));    
                             $x++;
                         } 
                     }else{
                         $this->setAt($y,$x,'ligne', $y);    
                         $this->setAt($y,$x,'colonne', $x);
-                        $this->setAt($y,$x,'coords', chr(ord('a')+($x)).":".($y+1));
+                        $this->setAt($y,$x,'coords', chr(ord('a')+($x))."".($y+1));
                         $this->setAt($y,$x,'valeur', $entree->get('valeur'));
                         $x++;
                     }
@@ -74,8 +134,17 @@
             return $count;
         }
         function learnDimensions(){
-            $this->height = $this->countlignes();
+            $this->learnHeight();
             $this->width = $this->countcolonnes();
+        }
+        function learnHeight(){
+            $this->height = $this->countlignes()+2; 
+            $fields = $this->entite->getchamps();
+            foreach($fields as $field){
+                if($field->get('type') == 'tableau'){
+                    $this->height +=2;
+                }
+            } 
         }
         function __construct($manager,$data,$entite){
             parent::__construct($manager,$data);

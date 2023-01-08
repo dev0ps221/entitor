@@ -36,6 +36,7 @@
     $entitor        = new Entitor([]);
     $entite = $entitor->getmod('entites')->select(53);
     $entite->sheet->setup();
+    $entite->sheet->mapToFile('test.xlsx');
 ?>
 <section id="view">
 
