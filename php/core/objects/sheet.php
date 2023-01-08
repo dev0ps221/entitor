@@ -5,6 +5,7 @@
         private $width = 0;
         private $height = 0;
         private $map = [];
+        private $mergecoords = ['x'=>[],'y'=>[]];
         function setup(){
             $this->learnDimensions();
             $this->setMap();
@@ -30,8 +31,8 @@
             foreach($this->map as $ligne){
                 foreach($ligne as $column){
                     if(count($column)){
-                        $column['coords'];
-                        $column['coords'];
+                        echo $column['coords'];
+                        echo $column['valeur'];
                         $sheet->setCellValue($column['coords'],$column['valeur']);
                     }
                 }
