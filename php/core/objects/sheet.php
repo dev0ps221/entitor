@@ -6,13 +6,14 @@
             $this->learnDimensions();
         }
         function learnDimensions(){
-            
+            $height = count($this->entite->getlignes());
+            error_log($height);
         }
         function __construct($manager,$data,$entite){
             parent::__construct($manager,$data);
-            $this->sheets = $manager->entitor->getmod('sheets');
+            $this->sheets = $manager;
             $this->entite = $entite;
-            $this->setup();
+            // $this->setup();
         }
     }
 ?>

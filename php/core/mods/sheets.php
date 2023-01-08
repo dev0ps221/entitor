@@ -4,7 +4,11 @@
         private $sheets;
         function __newSheet($entite){
             $sheetclass = $this->entitor->getobj('sheet');
-            return $this->__addsheet($entite->get('titre'),new $sheetclass($this,$entite,$entite->retrieveData()));
+            $sheet = new $sheetclass($this,$entite->retrieveData(),$entite);
+            return $this->__addsheet(
+                $entite->get('titre'),
+                $sheet
+            );
         }
         function __addsheet($name,$sheet){
             $sheet->set('name',$name);
