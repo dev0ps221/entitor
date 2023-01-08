@@ -26,15 +26,16 @@
         border:3px double #1dd;
         background:#3992;
         min-height:20px;
-        /* min-width:; */
+        /* min-width:   ; */
         /* padding:2.5%; */
         margin:0;
     }
 </style>
 <?php
-    // include('app.php');
-    // $entitor        = new Entitor([]);
-    // $entitor->getmod('entites')->clone(2,'champstableau',1);
+    include('app.php');
+    $entitor        = new Entitor([]);
+    $entite = $entitor->getmod('entites')->select(54);
+    $entite->sheet->setup();
 ?>
 <section id="view">
 
@@ -44,12 +45,12 @@
 <script src='/builder.js'>
 </script>
 <script>
-    const entitor = new EntitorClient()
-    const builder = entitor.newBuilder(document.querySelector('#view'),1)
-    builder.settableau(53)
-    builder.renderTable()
-    document.body.appendChild(builder.ajouter_champs_elem())
-    document.body.appendChild(builder.ajouter_ligne_elem())
+    // const entitor = new EntitorClient()
+    // const builder = entitor.newBuilder(document.querySelector('#view'),1)
+    // builder.settableau(53)
+    // builder.renderTable()
+    // document.body.appendChild(builder.ajouter_champs_elem())
+    // document.body.appendChild(builder.ajouter_ligne_elem())
 </script>
 </body>
 </html>

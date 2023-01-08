@@ -4,7 +4,8 @@
         private $sheets;
         function __newSheet($entite){
             $sheetclass = $this->entitor->getobj('sheet');
-            $sheet = new $sheetclass($this,$entite->retrieveData(),$entite);
+            $data = $entite->retrieveData();
+            $sheet = new $sheetclass($this,$data,$entite);
             return $this->__addsheet(
                 $entite->get('titre'),
                 $sheet
