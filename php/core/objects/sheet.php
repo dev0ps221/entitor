@@ -32,19 +32,29 @@
                     if($entree->get('type') == 'entree'){
                         $entreesentree = $this->manager->entitor->getmod('lignes')->select($entree->get('valeur'))->getentree();
                         foreach($entreesentree as $entree){
-                            $this->map[$y][$x]['coords'] = chr(ord('a')+($x)).":".($y+1);    
-                            $this->map[$y][$x]['valeur'] = $entree->get('valeur');    
+                            $this->setAt($y,$x,'ligne', $y);    
+                            $this->setAt($y,$x,'colonne', $x);    
+                            $this->setAt($y,$x,'coords', chr(ord('a')+($x)).":".($y+1));    
+                            $this->setAt($y,$x,'valeur', $entree->get('valeur'));    
                             $x++;
                         } 
                     }else{
-                        $this->map[$y][$x]['coords'] = chr(ord('a')+($x)).":".($y+1);
-                        $this->map[$y][$x]['valeur'] = $entree->get('valeur');
+                        $this->setAt($y,$x,'ligne', $y);    
+                        $this->setAt($y,$x,'colonne', $x);
+                        $this->setAt($y,$x,'coords', chr(ord('a')+($x)).":".($y+1));
+                        $this->setAt($y,$x,'valeur', $entree->get('valeur'));
                         $x++;
                     }
                 }
                 $x = 0;
                 $y++;
             }
+        }
+        function getAt($ligne,$colonne){
+            return $this->map[$ligne][$colonne];
+        }
+        function setAt($ligne,$colonne,$champs,$valeur){
+            $this->map[$ligne][$colonne][$champs] = $valeur;    
         }
         function countlignes(){
             return count($this->entite->getlignes());
