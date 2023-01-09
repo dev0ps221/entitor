@@ -95,7 +95,7 @@
         function setMap(){
             $x = 0;
             $y = 0;
-            while($y < $this->height){
+            while($y+1 < $this->height){
                $this->map[$y] = [];
                while($x < $this->width){
                 $this->map[$y][$x] = [];
@@ -116,8 +116,7 @@
             $this->setAt($y,$x,'coords', $coords);    
             $this->setAt($y,$x,'valeur', $this->entite->get('titre'));
             $y++;
-            $process = function($champs,$x,$y,$self,$process){
-                        
+            $process = function($champs,$x,$y,$self,$process){                      
                 foreach($champs as $champs){
                     $self->setAt($y,$x,'ligne', $y);    
                     $self->setAt($y,$x,'colonne', $x);        
@@ -140,6 +139,7 @@
             $processed = $process($champs,$x,$y,$this,$process);
             $x = 0;
             $y = $processed[1];
+            $y++;
             foreach($lignes as $ligne){
                 $entrees = $ligne->getentree();
                 foreach($entrees as $entree){
@@ -151,16 +151,6 @@
                         $coords=$this->colonnename($x)."".($y+1);
                         $this->setAt($y,$x,'coords', $coords);    
                         $this->setAt($y,$x,'valeur', $entree->get('titre'));
-                        $y++;
-                        // foreach($champsentree as $champs){
-                        //     $this->setAt($y,$x,'ligne', $y);    
-                        //     $this->setAt($y,$x,'colonne', $x);        
-                        //     $coords=$this->colonnename($x)."".($y+1);
-                        //     $this->setAt($y,$x,'coords', $coords);    
-                        //     $this->setAt($y,$x,'valeur', $champs->get('titre'));   
-                        //     $x++;
-                        // }
-                        // $y++;
                         foreach($entreesentree as $entree){
                             $this->setAt($y,$x,'ligne', $y);    
                             $this->setAt($y,$x,'colonne', $x);    
