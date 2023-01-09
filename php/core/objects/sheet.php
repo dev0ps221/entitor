@@ -6,6 +6,21 @@
         private $height = 0;
         private $map = [];
         private $mergecoords = ['x'=>[],'y'=>[]];
+        function colonnename($x){
+            echo "<br>colonne name for $x</br>";
+            $name = "";
+            if($x>=26){
+                $xcount = intval(ceil($x ? 26/$x : $x));
+                $x = $x ? 26%$x : $x;
+                for($i = 0 ; $i < $xcount ; $i++){
+                    $name = chr(ord("a")+$i);
+                }
+                $name = "$name".chr(ord("a")+$x);
+            }else{
+                $name = chr(ord("a")+$x);
+            }
+            return $name;
+        }
         function setup(){
             $this->learnDimensions();
             $this->setMap();
@@ -62,13 +77,17 @@
             $champs = $entite->getchamps();
             $this->setAt($y,$x,'ligne', $y);    
             $this->setAt($y,$x,'colonne', $x);        
-            $this->setAt($y,$x,'coords', chr(ord('a')+($x))."".($y+1));    
+            $coords=$this->colonnename($x)."".($y+1);
+            echo "<br>$coords<br>";
+            $this->setAt($y,$x,'coords', $coords);    
             $this->setAt($y,$x,'valeur', $this->entite->get('titre'));
             $y++;
             foreach($champs as $champs){
                 $this->setAt($y,$x,'ligne', $y);    
                 $this->setAt($y,$x,'colonne', $x);        
-                $this->setAt($y,$x,'coords', chr(ord('a')+($x))."".($y+1));    
+                $coords=$this->colonnename($x)."".($y+1);
+                echo "<br>$coords<br>";
+                $this->setAt($y,$x,'coords', $coords);    
                 $this->setAt($y,$x,'valeur', $champs->get('titre'));   
                 $x++;
             }
@@ -81,13 +100,17 @@
                         $champsentree = $this->manager->entitor->getmod('lignes')->select($entree->get('valeur'))->getchamps();
                         $this->setAt($y,$x,'ligne', $y);    
                         $this->setAt($y,$x,'colonne', $x);        
-                        $this->setAt($y,$x,'coords', chr(ord('a')+($x))."".($y+1));    
+                        $coords=$this->colonnename($x)."".($y+1);
+                        echo "<br>$coords<br>";
+                        $this->setAt($y,$x,'coords', $coords);    
                         $this->setAt($y,$x,'valeur', $entree->get('titre'));
                         $y++;
                         foreach($champsentree as $champs){
                             $this->setAt($y,$x,'ligne', $y);    
                             $this->setAt($y,$x,'colonne', $x);        
-                            $this->setAt($y,$x,'coords', chr(ord('a')+($x))."".($y+1));    
+                            $coords=$this->colonnename($x)."".($y+1);
+                            echo "<br>$coords<br>";
+                            $this->setAt($y,$x,'coords', $coords);    
                             $this->setAt($y,$x,'valeur', $champs->get('titre'));   
                             $x++;
                         }
@@ -95,14 +118,18 @@
                         foreach($entreesentree as $entree){
                             $this->setAt($y,$x,'ligne', $y);    
                             $this->setAt($y,$x,'colonne', $x);    
-                            $this->setAt($y,$x,'coords', chr(ord('a')+($x))."".($y+1));    
+                            $coords=$this->colonnename($x)."".($y+1);
+                            echo "<br>$coords<br>";
+                            $this->setAt($y,$x,'coords', $coords);    
                             $this->setAt($y,$x,'valeur', $entree->get('valeur'));    
                             $x++;
                         } 
                     }else{
                         $this->setAt($y,$x,'ligne', $y);    
                         $this->setAt($y,$x,'colonne', $x);
-                        $this->setAt($y,$x,'coords', chr(ord('a')+($x))."".($y+1));
+                        $coords=$this->colonnename($x)."".($y+1);
+                        echo "<br>$coords<br>";
+                        $this->setAt($y,$x,'coords', $coords);
                         $this->setAt($y,$x,'valeur', $entree->get('valeur'));
                         $x++;
                     }
