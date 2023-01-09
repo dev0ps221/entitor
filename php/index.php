@@ -34,9 +34,9 @@
 <?php
     include('app.php');
     $entitor        = new Entitor([]);
-    // $entite = $entitor->getmod('entites')->select(54);
-    // $entite->sheet->setup();
-    // $entite->sheet->mapToFile('test.xlsx');
+    $entite = $entitor->getmod('entites')->select(54);
+    $entite->sheet->setup();
+    $entite->sheet->mapToFile('test.xlsx');
 ?>
 <section id="view">
 

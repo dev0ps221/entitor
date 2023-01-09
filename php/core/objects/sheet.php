@@ -39,30 +39,56 @@
             // print_r($this->map);
             // echo "</pre>";
         }
+        function areaBorder($sheet,$coords){
+            $stle = array(
+                'borders'=>array(
+                    'allborders'=>array(
+                        'style'=>PHPExcel_Style_Border::BORDER_THIN
+                    )
+                )
+            );
+            echo $coords;
+            $sheetstyle = $sheet->getStyle($coords);
+            print_r($sheetstyle);
+            $sheetstyle->ApplyFromArray($stle);
+            unset($stle);
+        }
         function mapToFile($filename){
             $tempfile = 'xlstmp_'.time().".xlsx";
             $f = fopen($filename,'a+');
             fclose($f);
             $reader = PHPExcel_IOFactory::createReader('Excel2007');
+            
             $phpExcel = $reader->load("./$filename");
             // Get the first sheet
             
             $sheet = $phpExcel->getSheetByName($this->get('titre')) ? $phpExcel->getSheetByName($this->get('titre'))  : $phpExcel->createSheet();
-            
             $sheet->setTitle($this->get('titre'));
+            
             $writer = PHPExcel_IOFactory::createWriter($phpExcel, "Excel2007");
             
             foreach($this->map as $ligne){
                 foreach($ligne as $column){
                     if(count($column)){
-                        echo $column['coords'];
-                        echo $column['valeur'];
                         $sheet->setCellValue($column['coords'],$column['valeur']);
                     }
                 }
                 
             }
+            $firstx = 0;
+            $firsty = 1;
+            $lastx  = $this->width-1;
+            $lasty  = count($this->map);
+            $coords = $this->colonnename($firstx).$firsty.":".$this->colonnename($lastx).$lasty;
             $writer->save("./$filename");
+
+            $phpExcel = $reader->load("./$filename");
+            // Get the first sheet
+            $sheet = $phpExcel->getSheetByName($this->get('titre')) ? $phpExcel->getSheetByName($this->get('titre'))  : $phpExcel->createSheet();
+            $writer = PHPExcel_IOFactory::createWriter($phpExcel, "Excel2007");
+            $this->areaBorder($sheet,$coords);
+            $writer->save("./$filename");   
+            
             // rename($tempfile,$filename);
         
         }
