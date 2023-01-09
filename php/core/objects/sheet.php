@@ -7,17 +7,27 @@
         private $map = [];
         private $mergecoords = ['x'=>[],'y'=>[]];
         function colonnename($x){
-            echo "<br>colonne name for $x</br>";
+            $number  = $x; 
             $name = "";
-            if($x>=26){
-                $xcount = intval(ceil($x ? 26/$x : $x));
-                $x = $x ? 26%$x : $x;
-                for($i = 0 ; $i < $xcount ; $i++){
-                    $name = chr(ord("a")+$i);
+            if($number >= 26){
+                echo "<br>colonne name for $x</br>";
+                $turns   = 0;
+                while ( $number >= 26){
+                    $turns++;
+                    $number = $number - 26;
                 }
-                $name = "$name".chr(ord("a")+$x);
+                $name = chr(ord("a")+$turns).chr(ord("a")+$number);
             }else{
-                $name = chr(ord("a")+$x);
+                if($x>=26){
+                    $xcount = intval(ceil($x ? 26/$x : $x));
+                    $x = $x ? 26%$x : $x;
+                    for($i = 0 ; $i < $xcount ; $i++){
+                        $name = chr(ord("a")+$i);
+                    }
+                    $name = "$name".chr(ord("a")+$x);
+                }else{
+                    $name = chr(ord("a")+$x);
+                }
             }
             return $name;
         }
@@ -31,14 +41,13 @@
         }
         function mapToFile($filename){
             $tempfile = 'xlstmp_'.time().".xlsx";
-            $f = fopen($tempfile,'w');
+            $f = fopen($filename,'a+');
             fclose($f);
             $reader = PHPExcel_IOFactory::createReader('Excel2007');
-            $phpExcel = $reader->load("./$tempfile");
+            $phpExcel = $reader->load("./$filename");
             // Get the first sheet
             
-            $sheet = $phpExcel->createSheet();
-            $sheet = $phpExcel->getActiveSheet();
+            $sheet = $phpExcel->getSheetByName($this->get('titre')) ? $phpExcel->getSheetByName($this->get('titre'))  : $phpExcel->createSheet();
             
             $sheet->setTitle($this->get('titre'));
             $writer = PHPExcel_IOFactory::createWriter($phpExcel, "Excel2007");
@@ -53,8 +62,8 @@
                 }
                 
             }
-            $writer->save("./$tempfile");
-            rename($tempfile,$filename);
+            $writer->save("./$filename");
+            // rename($tempfile,$filename);
         
         }
         function setMap(){
@@ -78,20 +87,33 @@
             $this->setAt($y,$x,'ligne', $y);    
             $this->setAt($y,$x,'colonne', $x);        
             $coords=$this->colonnename($x)."".($y+1);
-            echo "<br>$coords<br>";
             $this->setAt($y,$x,'coords', $coords);    
             $this->setAt($y,$x,'valeur', $this->entite->get('titre'));
             $y++;
-            foreach($champs as $champs){
-                $this->setAt($y,$x,'ligne', $y);    
-                $this->setAt($y,$x,'colonne', $x);        
-                $coords=$this->colonnename($x)."".($y+1);
-                echo "<br>$coords<br>";
-                $this->setAt($y,$x,'coords', $coords);    
-                $this->setAt($y,$x,'valeur', $champs->get('titre'));   
-                $x++;
-            }
-            $y++;
+            $process = function($champs,$x,$y,$self,$process){
+                        
+                foreach($champs as $champs){
+                    $self->setAt($y,$x,'ligne', $y);    
+                    $self->setAt($y,$x,'colonne', $x);        
+                    $coords=$self->colonnename($x)."".($y+1);
+                    if($champs->get('type') == 'tableau'){
+                        $self->setAt($y,$x,'coords', $coords);    
+                        $self->setAt($y,$x,'valeur', $champs->get('titre'));
+                        $processed = $process($champs->champs,$x,$y+1,$self,$process);
+                        $x = $processed[0];
+                        $x--;
+                    }else{
+                        $self->setAt($y,$x,'coords', $coords);    
+                        $self->setAt($y,$x,'valeur', $champs->get('titre'));   
+                    }
+                    $x++;   
+                }
+                $y++;
+                return [$x,$y];
+            };
+            $processed = $process($champs,$x,$y,$this,$process);
+            $x = 0;
+            $y = $processed[1];
             foreach($lignes as $ligne){
                 $entrees = $ligne->getentree();
                 foreach($entrees as $entree){
@@ -101,25 +123,22 @@
                         $this->setAt($y,$x,'ligne', $y);    
                         $this->setAt($y,$x,'colonne', $x);        
                         $coords=$this->colonnename($x)."".($y+1);
-                        echo "<br>$coords<br>";
                         $this->setAt($y,$x,'coords', $coords);    
                         $this->setAt($y,$x,'valeur', $entree->get('titre'));
                         $y++;
-                        foreach($champsentree as $champs){
-                            $this->setAt($y,$x,'ligne', $y);    
-                            $this->setAt($y,$x,'colonne', $x);        
-                            $coords=$this->colonnename($x)."".($y+1);
-                            echo "<br>$coords<br>";
-                            $this->setAt($y,$x,'coords', $coords);    
-                            $this->setAt($y,$x,'valeur', $champs->get('titre'));   
-                            $x++;
-                        }
-                        $y++;
+                        // foreach($champsentree as $champs){
+                        //     $this->setAt($y,$x,'ligne', $y);    
+                        //     $this->setAt($y,$x,'colonne', $x);        
+                        //     $coords=$this->colonnename($x)."".($y+1);
+                        //     $this->setAt($y,$x,'coords', $coords);    
+                        //     $this->setAt($y,$x,'valeur', $champs->get('titre'));   
+                        //     $x++;
+                        // }
+                        // $y++;
                         foreach($entreesentree as $entree){
                             $this->setAt($y,$x,'ligne', $y);    
                             $this->setAt($y,$x,'colonne', $x);    
                             $coords=$this->colonnename($x)."".($y+1);
-                            echo "<br>$coords<br>";
                             $this->setAt($y,$x,'coords', $coords);    
                             $this->setAt($y,$x,'valeur', $entree->get('valeur'));    
                             $x++;
@@ -128,7 +147,6 @@
                         $this->setAt($y,$x,'ligne', $y);    
                         $this->setAt($y,$x,'colonne', $x);
                         $coords=$this->colonnename($x)."".($y+1);
-                        echo "<br>$coords<br>";
                         $this->setAt($y,$x,'coords', $coords);
                         $this->setAt($y,$x,'valeur', $entree->get('valeur'));
                         $x++;
