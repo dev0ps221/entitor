@@ -57,25 +57,18 @@
             $filename = "exports/$filename";
             $f = fopen($filename,'a+');
             fclose($f);
-            $reader = PHPExcel_IOFactory::createReader('Excel2007');
-            
+            $reader = PHPExcel_IOFactory::createReader('Excel2007');            
             $phpExcel = $reader->load("./$filename");
-            // Get the first sheet
-            
             $sheet = $phpExcel->getSheetByName($this->get('titre')) ? $phpExcel->getSheetByName($this->get('titre'))  : $phpExcel->createSheet();
             $sheet->setTitle($this->get('titre'));
-            
             $writer = PHPExcel_IOFactory::createWriter($phpExcel, "Excel2007");
-            
             foreach($this->map as $ligne){
                 foreach($ligne as $column){
                     if(count($column)){
-                        // $column['coords'][-1] = $column['coords'][-1]+$starty;
                         $column['coords'] = substr($column['coords'],-2,strlen($column)-1).($column['coords'][-1]+$starty);
                         $sheet->setCellValue($column['coords'],$column['valeur']);
                     }
-                }
-                
+                }              
             }
             $firstx = 0;
             $firsty = $starty+1;
@@ -85,14 +78,11 @@
             $writer->save("./$filename");
 
             $phpExcel = $reader->load("./$filename");
-            // Get the first sheet
+            
             $sheet = $phpExcel->getSheetByName($this->get('titre')) ? $phpExcel->getSheetByName($this->get('titre'))  : $phpExcel->createSheet();
             $writer = PHPExcel_IOFactory::createWriter($phpExcel, "Excel2007");
             $this->areaBorder($sheet,$coords);
             $writer->save("./$filename");   
-            
-            // rename($tempfile,$filename);
-        
         }
         function setMap(){
             $x = 0;
