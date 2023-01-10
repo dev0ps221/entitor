@@ -16,7 +16,6 @@
             $number  = $x; 
             $name = "";
             if($number >= 26){
-                echo "<br>colonne name for $x</br>";
                 $turns   = 0;
                 while ( $number >= 26){
                     $turns++;
@@ -41,9 +40,6 @@
             $this->learnDimensions();
             $this->setMap();
             $this->fillMap($this->entite);
-            // echo "<pre>";
-            // print_r($this->map);
-            // echo "</pre>";
         }
         function areaBorder($sheet,$coords){
             $stle = array(
@@ -53,14 +49,12 @@
                     )
                 )
             );
-            echo $coords;
             $sheetstyle = $sheet->getStyle($coords);
-            print_r($sheetstyle);
             $sheetstyle->ApplyFromArray($stle);
             unset($stle);
         }
         function mapToFile($filename,$starty=20){
-            $tempfile = 'xlstmp_'.time().".xlsx";
+            $filename = "exports/$filename";
             $f = fopen($filename,'a+');
             fclose($f);
             $reader = PHPExcel_IOFactory::createReader('Excel2007');
@@ -76,21 +70,17 @@
             foreach($this->map as $ligne){
                 foreach($ligne as $column){
                     if(count($column)){
-                        $column['coords'][-1] = $column['coords'][-1]+$starty;
+                        // $column['coords'][-1] = $column['coords'][-1]+$starty;
+                        $column['coords'] = substr($column['coords'],-2,strlen($column)-1).($column['coords'][-1]+$starty);
                         $sheet->setCellValue($column['coords'],$column['valeur']);
-                        echo "<br>";
-                        $column['coords'] = substr($column['coords'],-2,strlen($column)-1).($column['coords']+$starty);
-                        echo $column['coords'] ;
-                        // echo ;
-                        echo "<br>";
                     }
                 }
                 
             }
             $firstx = 0;
-            $firsty = 1;
+            $firsty = $starty+1;
             $lastx  = $this->width-1;
-            $lasty  = count($this->map);
+            $lasty  = $starty+count($this->map);
             $coords = $this->colonnename($firstx).$firsty.":".$this->colonnename($lastx).$lasty;
             $writer->save("./$filename");
 
