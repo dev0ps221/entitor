@@ -2,6 +2,15 @@
     include_once(dirname(__FILE__)."/objskel.php");
     class EntitorEntite extends EntitorObject{
         private $champs = null;
+        function labelheight(){
+            $height = 1;
+            foreach($this-getchamps() as $champs){
+                if($champs->get('type') == $tableau){
+                    $height+=$champs->reftable->labelheight();
+                }
+            }
+            return $height;
+        }
         function addligne(){
             $ligne = $this->lignes->createNew($this->get('id'));
             $ligne->addentree();

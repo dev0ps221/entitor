@@ -6,6 +6,12 @@
         private $height = 0;
         private $map = [];
         private $mergecoords = ['x'=>[],'y'=>[]];
+        function getheight(){
+            return $this->height;
+        }
+        function getwidth(){
+            return $this->width;
+        }
         function colonnename($x){
             $number  = $x; 
             $name = "";
@@ -53,7 +59,7 @@
             $sheetstyle->ApplyFromArray($stle);
             unset($stle);
         }
-        function mapToFile($filename){
+        function mapToFile($filename,$starty=20){
             $tempfile = 'xlstmp_'.time().".xlsx";
             $f = fopen($filename,'a+');
             fclose($f);
@@ -70,7 +76,13 @@
             foreach($this->map as $ligne){
                 foreach($ligne as $column){
                     if(count($column)){
+                        $column['coords'][-1] = $column['coords'][-1]+$starty;
                         $sheet->setCellValue($column['coords'],$column['valeur']);
+                        echo "<br>";
+                        $column['coords'] = substr($column['coords'],-2,strlen($column)-1).($column['coords']+$starty);
+                        echo $column['coords'] ;
+                        // echo ;
+                        echo "<br>";
                     }
                 }
                 
@@ -124,10 +136,12 @@
                     if($champs->get('type') == 'tableau'){
                         $self->setAt($y,$x,'coords', $coords);    
                         $self->setAt($y,$x,'valeur', $champs->get('titre'));
+                        $self->setAt($y,$x,'horizontal_merge', $coords.":".( $this->colonnename($x+$champs->reftable->sheet->getheight()).$y+1 ));
                         $processed = $process($champs->champs,$x,$y+1,$self,$process);
                         $x = $processed[0];
                         $x--;
                     }else{
+                        $self->setAt($y,$x,'vertical_merge',  $coords.":".$self->colonnename($x)."".($y+1+$this->manager->entitor->getmod('entites')->select($champs->get('entite'))->labelheight()));    
                         $self->setAt($y,$x,'coords', $coords);    
                         $self->setAt($y,$x,'valeur', $champs->get('titre'));   
                     }
