@@ -67,6 +67,12 @@
                     if(count($column)){
                         $column['coords'] = substr($column['coords'],-2,strlen($column)-1).($column['coords'][-1]+$starty);
                         $sheet->setCellValue($column['coords'],$column['valeur']);
+                        if($column['horizontal_merge']){
+                            $sheet->mergeCells($column['horizontal_merge']);
+                        }
+                        if($column['vertical_merge']){
+                            $sheet->mergeCells($column['vertical_merge']);
+                        }
                     }
                 }              
             }
@@ -76,9 +82,7 @@
             $lasty  = $starty+count($this->map);
             $coords = $this->colonnename($firstx).$firsty.":".$this->colonnename($lastx).$lasty;
             $writer->save("./$filename");
-
             $phpExcel = $reader->load("./$filename");
-            
             $sheet = $phpExcel->getSheetByName($this->get('titre')) ? $phpExcel->getSheetByName($this->get('titre'))  : $phpExcel->createSheet();
             $writer = PHPExcel_IOFactory::createWriter($phpExcel, "Excel2007");
             $this->areaBorder($sheet,$coords);
@@ -97,6 +101,18 @@
                $y++; 
             }
         }
+        function nextValue($champs,$idc){
+            $count = 0;
+            while($idc<count($champs)){
+            
+                if($champs[$idc]->get('valeur')){
+                    break;
+                }
+                $idc++;
+                $count++;
+            }
+            return $count;
+        }
         function fillMap($entite){
             $x = 0;
             $y = 0;
@@ -107,23 +123,24 @@
             $coords=$this->colonnename($x)."".($y+1);
             $this->setAt($y,$x,'coords', $coords);    
             $this->setAt($y,$x,'valeur', $this->entite->get('titre'));
+            $this->setAt($y,$x,'horizontal_merge', $this->colonnename($x).($y+1).":".$this->colonnename($x+$this->width-1).$y+1);
             $y++;
             $process = function($champs,$x,$y,$self,$process){                      
-                foreach($champs as $champs){
+                foreach($champs as $idc=>$chmps){
                     $self->setAt($y,$x,'ligne', $y);    
                     $self->setAt($y,$x,'colonne', $x);        
                     $coords=$self->colonnename($x)."".($y+1);
-                    if($champs->get('type') == 'tableau'){
+                    if($chmps->get('type') == 'tableau'){
                         $self->setAt($y,$x,'coords', $coords);    
-                        $self->setAt($y,$x,'valeur', $champs->get('titre'));
-                        $self->setAt($y,$x,'horizontal_merge', $coords.":".( $this->colonnename($x+$champs->reftable->sheet->getheight()).$y+1 ));
-                        $processed = $process($champs->champs,$x,$y+1,$self,$process);
+                        $self->setAt($y,$x,'valeur', $chmps->get('titre'));
+                        $self->setAt($y,$x,'horizontal_merge', $coords.":".( $this->colonnename($x+$this->nextValue($champs,$idc)).$y+1 ));
+                        $processed = $process($chmps->champs,$x,$y+1,$self,$process);
                         $x = $processed[0];
                         $x--;
                     }else{
-                        $self->setAt($y,$x,'vertical_merge',  $coords.":".$self->colonnename($x)."".($y+1+$this->manager->entitor->getmod('entites')->select($champs->get('entite'))->labelheight()));    
+                        $self->setAt($y,$x,'vertical_merge',  $coords.":".$self->colonnename($x)."".($y+1+$this->manager->entitor->getmod('entites')->select($chmps->get('entite'))->labelheight()));    
                         $self->setAt($y,$x,'coords', $coords);    
-                        $self->setAt($y,$x,'valeur', $champs->get('titre'));   
+                        $self->setAt($y,$x,'valeur', $chmps->get('titre'));   
                     }
                     $x++;   
                 }
