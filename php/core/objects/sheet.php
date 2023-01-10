@@ -68,9 +68,11 @@
                         $column['coords'] = substr($column['coords'],-2,strlen($column)-1).($column['coords'][-1]+$starty);
                         $sheet->setCellValue($column['coords'],$column['valeur']);
                         if($column['horizontal_merge']){
+                            echo $column['horizontal_merge'];
                             $sheet->mergeCells($column['horizontal_merge']);
                         }
                         if($column['vertical_merge']){
+                            echo $column['vertical_merge'];
                             $sheet->mergeCells($column['vertical_merge']);
                         }
                     }
@@ -123,7 +125,9 @@
             $coords=$this->colonnename($x)."".($y+1);
             $this->setAt($y,$x,'coords', $coords);    
             $this->setAt($y,$x,'valeur', $this->entite->get('titre'));
-            $this->setAt($y,$x,'horizontal_merge', $this->colonnename($x).($y+1).":".$this->colonnename($x+$this->width-1).$y+1);
+            $titlestart = $this->colonnename($x).($y+1);
+            $titleend= $this->colonnename($x+($this->width-1)).($y+1);
+            $this->setAt($y,$x,'horizontal_merge', $titlestart.":".$titleend);
             $y++;
             $process = function($champs,$x,$y,$self,$process){                      
                 foreach($champs as $idc=>$chmps){
@@ -133,7 +137,9 @@
                     if($chmps->get('type') == 'tableau'){
                         $self->setAt($y,$x,'coords', $coords);    
                         $self->setAt($y,$x,'valeur', $chmps->get('titre'));
-                        $self->setAt($y,$x,'horizontal_merge', $coords.":".( $this->colonnename($x+$this->nextValue($champs,$idc)).$y+1 ));
+                        $titlestart = $this->colonnename($x).($y+1);
+                        $titleend= $this->colonnename($x+($this->width-1)).($y+1);
+                        $this->setAt($y,$x,'horizontal_merge', $titlestart.":".$titleend);
                         $processed = $process($chmps->champs,$x,$y+1,$self,$process);
                         $x = $processed[0];
                         $x--;

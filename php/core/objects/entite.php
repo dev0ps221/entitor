@@ -5,7 +5,7 @@
         function labelheight(){
             $height = 1;
             foreach($this->getchamps() as $champs){
-                if($champs->get('type') == $tableau){
+                if($champs->get('type') == 'tableau'){
                     $height+=$champs->reftable->labelheight();
                 }
             }
